@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 // komunicira s bazom
 @Repository
 public interface HotelRepository extends CrudRepository<Hotel, Long> {
-    Hotel findOne(Long id);
-    void delete(Long id);
+//    Hotel findOne(Long id);
+
     //Hotel findByName(String name);
 }

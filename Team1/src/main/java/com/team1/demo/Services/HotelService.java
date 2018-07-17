@@ -7,21 +7,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class HotelService {
+    @Autowired
     private HotelRepository hotelRepository;
 
-    @Autowired
-    public void setHotelRepository(HotelRepository hotelRepository) {
-        this.hotelRepository = hotelRepository;
-    }
 
     public Iterable<Hotel> findAll() {
         return hotelRepository.findAll();
     }
 
 
-    public Hotel findOne(Long id) {
-        return hotelRepository.findOne(id);
-    }
+//    public Hotel findOne(Long id) {
+//        return hotelRepository.findOne(id);
+//    }
 
 
     public Hotel save(Hotel hotel) {
@@ -29,7 +26,7 @@ public class HotelService {
     }
 
 
-    public void delete(Long id) {
-        hotelRepository.delete(id);
+    public void delete(Hotel hotel) {
+        hotelRepository.delete(hotel);
     }
 }

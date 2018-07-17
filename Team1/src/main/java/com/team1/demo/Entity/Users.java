@@ -10,6 +10,7 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userID;
+
     private String username;
     private String password;
     private String firstName;
@@ -18,6 +19,18 @@ public class Users {
     private double latitude;
     private String role;
 
+
+    public Users(){}
+
+    public Users(String username, String password, String firstName, String lastName, double longitude, double latitude, String role) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.role = role;
+    }
 
     public Long getUserID() {
         return userID;
