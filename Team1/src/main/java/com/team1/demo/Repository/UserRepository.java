@@ -7,4 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<Users, Long> {
 
+    Users findOne(Long id);
+
+    void delete(Long id);
 }
