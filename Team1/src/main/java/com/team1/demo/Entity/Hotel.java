@@ -14,9 +14,22 @@ public class Hotel {
     private String description;
     private double longitude;
     private double latitude;
+    private String location;
 
     public Long getHotelID() {
         return hotelID;
+    }
+
+    public Hotel() {
+
+    }
+
+    public Hotel(String name, String description, String location) {
+        this.name = name;
+        this.description = description;
+        this.location = location;
+        this.longitude = 0;
+        this.latitude = 0;
     }
 
     public void setHotelID(Long hotelID) {
@@ -53,5 +66,13 @@ public class Hotel {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

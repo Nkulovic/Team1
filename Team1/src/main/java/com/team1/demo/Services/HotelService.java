@@ -15,16 +15,9 @@ public class HotelService {
         return hotelRepository.findAll();
     }
 
-
-//    public Hotel findOne(Long id) {
-//        return hotelRepository.findOne(id);
-//    }
-
-
-    public Hotel save(Hotel hotel) {
-        return hotelRepository.save(hotel);
+    public void save(Hotel hotel) {
+        hotelRepository.save(hotel);
     }
-
 
     public void delete(Hotel hotel) {
         hotelRepository.delete(hotel);
