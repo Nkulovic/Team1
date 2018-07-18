@@ -38,11 +38,24 @@ public class UserController {
         return "auth/login";
     }
 
+    @RequestMapping(value = "/admin")
+    public String showAdminPanelView() {
+        //System.out.println("ugh");
+        return "views/admin";
+    }
+
     @RequestMapping(value = "/userpanel")
     public String showUserPanelView() {
         //System.out.println("ugh");
         return "views/userpanel";
     }
+
+    @RequestMapping(value = "/supervisor")
+    public String showSupervisorPanelView() {
+        //System.out.println("ugh");
+        return "views/supervisor";
+    }
+
 
 
 
