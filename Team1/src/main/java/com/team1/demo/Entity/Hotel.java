@@ -10,11 +10,14 @@ public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long hotelID;
+
     private String name;
     private String description;
     private double longitude;
     private double latitude;
     private String location;
+
+
 
     public Long getHotelID() {
         return hotelID;

@@ -22,4 +22,8 @@ public class HotelService {
     public void delete(Hotel hotel) {
         hotelRepository.delete(hotel);
     }
+
+    public Hotel getOne(Long id) {
+        return hotelRepository.getOne(id);
+    }
 }

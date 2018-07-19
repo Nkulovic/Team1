@@ -9,6 +9,7 @@ import com.team1.demo.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import java.util.List;
 public class UserController {
     private UserService userService;
     private HotelService hotelService;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UserController(UserService userService, HotelService hotelService) {
@@ -43,7 +45,7 @@ public class UserController {
             Users user = userService.findByUsername(name);
 
             if(user == null) {
-                //
+                // can't log in
             }
             return "redirect:/userpanel/" + user.getUserID();
         }
@@ -63,8 +65,21 @@ public class UserController {
     }
 
     @RequestMapping(value = "/admin")
-    public String showAdminPanelView() {
+    public String showAdminPanelView(Model model) {
         //System.out.println("ugh");
+        Users user = new Users();
+        Hotel hotel = new Hotel();
+        Iterable<Users> usersList = userService.findAll();
+        Iterable<Hotel> hotelsList = hotelService.findAll();
+        // ovo ne smije biti postavljano ovako, podesiti kad se mapa implementira
+        user.setLongitude(0);
+        user.setLatitude(0);
+        hotel.setLatitude(0);
+        hotel.setLongitude(0);
+        model.addAttribute("user", user);
+        model.addAttribute("hotel", hotel);
+        model.addAttribute("usersList", usersList);
+        model.addAttribute("hotelsList", hotelsList);
         return "views/admin";
     }
 

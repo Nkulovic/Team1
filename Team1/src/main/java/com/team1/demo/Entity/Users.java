@@ -1,5 +1,8 @@
 package com.team1.demo.Entity;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,6 +10,8 @@ import javax.persistence.Id;
 
 @Entity
 public class Users {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userID;
