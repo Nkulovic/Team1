@@ -216,6 +216,7 @@
                     <th>Role</th>
                     <th>Longitude</th>
                     <th>Latitude</th>
+                    <th>Deleted</th>
                     <th>Edit</th>
                     <th>Delete</th>
 
@@ -231,6 +232,7 @@
                     <td th:text="${user.getRole()}"></td>
                     <td th:text="${user.getLongitude()}"></td>
                     <td th:text="${user.getLatitude()}"></td>
+                    <td th:text="${user.getDeleted()}"></td>
                     <td><a th:href="@{'/edit/user/' + ${user.getUserID()}}"> link</a> </td>
                     <td><a th:href="@{'/deleteuser/' + ${user.getUserID()}}">delete</a></td>
                 </tr>
@@ -276,8 +278,8 @@
                     <td th:text="${h.getLocation()}"></td>
                     <td th:text="${h.getLongitude()}"></td>
                     <td th:text="${h.getLatitude()}"></td>
-                    <td> <a th:href="@{'/edit/hotel/' + ${hotel.getHotelID()}}"> edit </a> </td>
-                    <td><img src="images/delete.png" style="height:25px; width:25px"></td>
+                    <td><a th:href="@{'/edit/hotel/' + ${h.getHotelID()}}">edit</a></td>
+                    <td> </td>
                 </tr>
 
 

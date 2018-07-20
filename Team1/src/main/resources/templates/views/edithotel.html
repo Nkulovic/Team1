@@ -140,16 +140,17 @@
         </div>
 
         <div class="container">
-            <input type="text" placeholder="Enter new name" name="name"  th:field="*{name}" required>
+            <input type="text" placeholder="Enter new name" name="name" th:value="${hotel.getName()}" th:field="*{name}" required>
 
-            <input type="text" placeholder="Enter new description" name="description"  th:field="*{description}" required>
+            <input type="text" placeholder="Enter new description" name="description" th:value="${hotel.getDescription()}" th:field="*{description}" required>
 
-            <input type="text" placeholder="Enter city" name="location"  th:field="*{location}" required>
+            <input type="text" placeholder="Enter city" name="location" th:value="${hotel.getLocation()}" th:field="*{location}" required>
 
-            <input type="text" placeholder="Enter longitude" name="logitude"  th:field="*{longitude}" required>
+            <input type="text" placeholder="Enter longitude" name="longitude" th:value="${hotel.getLongitude()}" th:field="*{longitude}" required>
 
-            <input type="text" placeholder="Enter latitude" name="latitude"  th:field="*{latitude}" required>
+            <input type="text" placeholder="Enter latitude" name="latitude" th:value="${hotel.getLatitude()}" th:field="*{latitude}" required>
 
+            <input type="hidden" th:value="${hotel.getHotelID()}" th:field="*{hotelID}">
             <button type="submit">Save Changes</button>
 
         </div>

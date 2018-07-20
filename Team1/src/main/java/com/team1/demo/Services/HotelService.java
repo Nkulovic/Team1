@@ -26,4 +26,8 @@ public class HotelService {
     public Hotel getOne(Long id) {
         return hotelRepository.getOne(id);
     }
+
+    public void updateHotel(String name, String descritpion, String location, double longitude, double latitude, Long id){
+        hotelRepository.updateHotel(name, descritpion, location, longitude, latitude, id);
+    }
 }

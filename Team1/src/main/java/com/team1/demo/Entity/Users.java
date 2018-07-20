@@ -23,6 +23,7 @@ public class Users {
     private double longitude;
     private double latitude;
     private String role;
+    private Boolean isDeleted;
 
 
     public Users(){}
@@ -35,8 +36,15 @@ public class Users {
         this.longitude = longitude;
         this.latitude = latitude;
         this.role = role;
+        this.isDeleted = false;
+    }
+    public Boolean getDeleted() {
+        return isDeleted;
     }
 
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
     public Long getUserID() {
         return userID;
     }

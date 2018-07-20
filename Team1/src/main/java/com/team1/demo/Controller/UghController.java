@@ -37,5 +37,6 @@ public class UghController {
         //userService.save(supervisor);
         //Hotel hotel = new Hotel("Hotel Bosnia", "Hotel se nalazi u samom centru grada, u neposrednoj blizini starog dijela grada, Baščaršije. Naš hotel u svojoj ponudi ima 72 komforne i moderno opremljene sobe. Hotel Bosnia obezbjeđuje i usluge banket i ketering servisa u nekoj od naših sala.", "Sarajevo");
         //hotelService.save(hotel);
+
     }
 }

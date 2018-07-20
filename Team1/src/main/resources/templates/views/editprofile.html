@@ -133,27 +133,28 @@
 
 <div id="editProfile" class="modal">
 
-    <form class="modal-content animate" th:action="@{/edit}" method="post" th:object="${user}">
+    <form class="modal-content animate" th:action="@{/edit}" th:method="post" th:object="${user}">
         <div class="imgcontainer">
             <span onclick="document.getElementById('editProfile').style.display='none'" class="close" title="Close Modal">&times;</span>
             <img src="images/user.png" alt="Avatar" class="avatar" style="height: 350px; width: 350px">
         </div>
 
         <div class="container">
-            <input type="text" placeholder="Enter new Username" name="username"  th:field="*{username}" required>
+            <input type="text" placeholder="Enter new Username" name="username" th:value="${user.getUsername()}"  th:field="*{username}" required>
 
-            <input type="password" placeholder="Enter new password" name="password"  th:field="*{password}" required>
+            <input type="password" placeholder="Enter new password" name="password" th:value="${user.getPassword()}"  th:field="*{password}" required>
 
-            <input type="text" placeholder="Enter first name" name="firstName"  th:field="*{firstName}" required>
+            <input type="text" placeholder="Enter first name" name="firstName" th:value="${user.getFirstName()}"  th:field="*{firstName}" required>
 
-            <input type="text" placeholder="Enter last name" name="lastName"  th:field="*{lastName}" required>
+            <input type="text" placeholder="Enter last name" name="lastName" th:value="${user.getLastName()}" th:field="*{lastName}" required>
 
-            <input type="text" placeholder="Enter role" name="role"  th:field="*{role}" required>
+            <input type="text" placeholder="Enter role" name="role" th:value="${user.getRole()}" th:field="*{role}" required>
 
-            <input type="text" placeholder="Enter longitude" name="logitude"  th:field="*{longitude}" required>
+            <input type="text" placeholder="Enter longitude" name="longitude"  th:value="${user.getLongitude()}" th:field="*{longitude}" required>
 
-            <input type="text" placeholder="Enter latitude" name="latitude"  th:field="*{latitude}" required>
+            <input type="text" placeholder="Enter latitude" name="latitude" th:value="${user.getLatitude()}"  th:field="*{latitude}" required>
 
+            <input type="hidden" th:value="${user.getUserID()}" th:field="*{userID}">
             <button type="submit">Save Changes</button>
 
         </div>
