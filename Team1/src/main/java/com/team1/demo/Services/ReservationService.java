@@ -1,5 +1,6 @@
 package com.team1.demo.Services;
 
+import com.team1.demo.Entity.Hotel;
 import com.team1.demo.Entity.Reservation;
 import com.team1.demo.Entity.Users;
 import com.team1.demo.Repository.ReservationRepository;
@@ -17,6 +18,7 @@ public class ReservationService {
     public Iterable<Reservation> findByUser(Users user) {
         return reservationRepository.findByUser(user);
     }
+    public Iterable<Reservation> findByHotel(Hotel hotel) { return reservationRepository.findByHotel(hotel); }
 
     public void save(Reservation reservation) {
         reservationRepository.save(reservation);

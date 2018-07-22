@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css' rel='stylesheet' />
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.css' rel='stylesheet' />
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {font-family: Arial, Helvetica, sans-serif;}
+
+        /* Full-width input fields */
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        /* Set a style for all buttons */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        /* Extra styles for the cancel button */
+        .cancelbtn {
+            width: auto;
+            padding: 10px 18px;
+            background-color: #f44336;
+        }
+
+        /* Center the image and position the close button */
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+            position: relative;
+        }
+
+        img.avatar {
+            width: 40%;
+            border-radius: 50%;
+        }
+
+        .container {
+            padding: 16px;
+        }
+
+        span.psw {
+            float: right;
+            padding-top: 16px;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            padding-top: 60px;
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button (x) */
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 0;
+            color: #000;
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: red;
+            cursor: pointer;
+        }
+
+        /* Add Zoom Animation */
+        .animate {
+            -webkit-animation: animatezoom 0.6s;
+            animation: animatezoom 0.6s
+        }
+
+        @-webkit-keyframes animatezoom {
+            from {-webkit-transform: scale(0)}
+            to {-webkit-transform: scale(1)}
+        }
+
+        @keyframes animatezoom {
+            from {transform: scale(0)}
+            to {transform: scale(1)}
+        }
+
+        /* Change styles for span and cancel button on extra small screens */
+        @media screen and (max-width: 300px) {
+            span.psw {
+                display: block;
+                float: none;
+            }
+            .cancelbtn {
+                width: 100%;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css' type='text/css' />
+<h2>Adding a Hotel</h2>
+
+<button onclick="document.getElementById('addHotel').style.display='block'" style="width:auto;">Add Hotel</button>
+
+<div id="addHotel" class="modal">
+    <form class="modal-content animate" th:action = "@{/addhotel}" method = "post" th:object="${hotel}">
+        <div class="imgcontainer">
+            <span onclick="document.getElementById('addHotel').style.display='none'" class="close" title="Close Modal">&times;</span>
+        </div>
+
+        <div class="container">
+            <input type="text" placeholder="Hotel Name" name="name" id="name" th:field="*{name}" required>
+
+            <input type="text" placeholder="Hotel Description" name="description" id="description" th:field="*{description}" required>
+
+            <input type="text" placeholder="address" name="address" id="address" th:field="{address}" required>
+
+            <input type="text" placeholder="City" name="location" id="location" th:field="*{location}"  required>
+
+            <input type="text" placeholder="Longitude" name="longitude" id="longitude" th:field="*{longitude}" required>
+
+            <input type="text" placeholder="Latitude" name="latitude" id="latitude" th:field="*{latitude}" required>
+
+            <div id="map-leaflet" class="map" style="width:100%;height:400px;">
+
+            </div>
+
+            <button type="submit">Add Hotel</button>
+
+        </div>
+
+        <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('addHotel').style.display='none'" class="cancelbtn">Cancel</button>
+
+        </div>
+    </form>
+
+
+
+</div>
+
+
+</form>
+</div>
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css' type='text/css' />
+<script>
+
+    mapboxgl.accessToken = 'pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA';
+
+    var atoken = 'pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA';
+
+    /* https://l.facebook.com/l.php?u=https%3A%2F%2Fapi.mapbox.com%2Fgeocoding%2Fv5%2Fmapbox.places%2Fulica%2Bmarsala%2Btita%2Bsarajevo.json%3Faccess_token%3Dpk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA&h=AT0nogQqSW8pLcD4YBQSi5EuAC5YIylRR6K7tTgZ5tdBxS2GJGMiKcU6CrIaeDSgimz5me3UoLSOdgJ00r8kyKfwLLKkC16OWsf5wt6Ek_LqgE3YSOCMlMlGOeKOdwKMYu-Pzg */
+    // After the map style has loaded on the page, add a source layer and default
+    // styling for a single point.
+    /*map.on('load', function() {
+        map.addSource('single-point', {
+            "type": "geojson",
+            "data": {
+                "type": "FeatureCollection",
+                "features": []
+            }
+        });
+
+        map.addLayer({
+            "id": "point",
+            "source": "single-point",
+            "type": "circle",
+            "paint": {
+                "circle-radius": 10,
+                "circle-color": "#007cbf"
+            }
+        });
+
+        // Listen for the `geocoder.input` event that is triggered when a user
+        // makes a selection and add a symbol that matches the result.
+        geocoder.on('result', function(ev) {
+            map.getSource('single-point').setData(ev.result.geometry);
+        });
+    });
+*/
+
+
+    /*if($('input[name="location"]').val() && $('input[name="address"]').val()) {
+        var address = $('input[name="address"]').val();
+        var city = $('input[name="location"]').val();
+
+        var getBBoxURL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + city + '.json?access_token=' + atoken;
+        //Sarajevo.json?access_token=pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA&country=ba'
+
+        minX = 0;
+        minY = 0;
+        maxX = 0;
+        maxY = 0;
+
+        $.ajax({
+            method: 'GET',
+            url: getBBoxURL,
+        }).done(function(data){
+          //  console.log(data.features.bbox)
+            minX = data.features[0].bbox[0];
+            minY = data.features[0].bbox[1];
+            maxX = data.features[0].bbox[2];
+            maxY = data.features[0].bbox[3];
+            console.log(minX + ',' + minY + ',' + maxX + ',' + maxY);
+
+          //  $('input[name="address"]').change(function() {
+                var address = $('input[name="address"]').val();
+                var hotelAddressURL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + address + ' ' + city + '.json?access_token=' + atoken + '&bbox=' + minX + ',' + minY + ',' + maxX + ',' + maxY;
+            //ulica+marsala+tita+sarajevo.json?access_token=pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA&bbox=' + minX + ',' + minY + ',' + maxX + ',' + maxY;
+
+
+                $.ajax({
+                    method: 'GET',
+                    url: hotelAddressURL,
+                }).done(function(data){
+                    var listResults = data.features;
+                   // console.log(data);
+                    for(var i = 0; i < listResults.length; i++) {
+                        console.log(listResults[i].center[0] + ' ' + listResults[i].center[1]);
+                        //if(listResults[i])
+                    }
+                });
+           // });
+
+
+
+         });
+
+    }*/
+
+    $('input[name="location"]').change(function() {
+        //  var address = $('input[name="address"]').val();
+        var city = $('input[name="location"]').val();
+
+        var getBBoxURL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + city + '.json?access_token=' + atoken;
+        //Sarajevo.json?access_token=pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA&country=ba'
+
+        minX = 0;
+        minY = 0;
+        maxX = 0;
+        maxY = 0;
+
+        $.ajax({
+            method: 'GET',
+            url: getBBoxURL,
+        }).done(function(data){
+            //  console.log(data.features.bbox)
+            minX = data.features[0].bbox[0];
+            minY = data.features[0].bbox[1];
+            maxX = data.features[0].bbox[2];
+            maxY = data.features[0].bbox[3];
+            console.log(minX + ',' + minY + ',' + maxX + ',' + maxY);
+
+            //  $('input[name="address"]').change(function() {
+            var address = $('input[name="address"]').val();
+            var hotelAddressURL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + address + ' ' + city + '.json?access_token=' + atoken + '&bbox=' + minX + ',' + minY + ',' + maxX + ',' + maxY;
+            //ulica+marsala+tita+sarajevo.json?access_token=pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA&bbox=' + minX + ',' + minY + ',' + maxX + ',' + maxY;
+
+
+            $.ajax({
+                method: 'GET',
+                url: hotelAddressURL,
+            }).done(function(data){
+                var listResults = data.features;
+                // console.log(data);
+                for(var i = 0; i < listResults.length; i++) {
+                    console.log(listResults[i].center[0] + ' ' + listResults[i].center[1]);
+                    //if(listResults[i])
+                }
+
+                var atoken = 'pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA';
+                L.mapbox.accessToken = atoken;
+
+                console.log(listResults[0].center[1] + listResults[0].center[0]);
+                var mapLeaflet = L.mapbox.map('map-leaflet', 'mapbox.streets')
+                    .setView([listResults[0].center[1], listResults[0].center[0]], 15);
+
+                L.marker([43.84864, 18.35644]).addTo(mapLeaflet);
+
+                mapLeaflet.scrollWheelZoom.disable();
+
+                });
+            //});
+
+        });
+
+    });
+
+
+    // console.log(minX + ',' + minY + ',' + maxX + ',' + maxY);
+
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>List of all Hotels in the System</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!-- CSS za search opciju u tabeli -->
+
+    <style>
+
+        * {box-sizing: border-box;}
+
+        .topnav {
+            overflow: hidden;
+            background-color: #4CAF50;
+            padding: 10px;
+        }
+
+
+        .topnav .search-container {
+            float: left;
+
+        }
+
+        .topnav input[type=text] {
+            padding: 6px;
+            margin-top: 8px;
+            font-size: 17px;
+            border: none;
+        }
+
+        .topnav .search-container button {
+            float: right;
+            padding: 6px 10px;
+            margin-top: 8px;
+            margin-right: 16px;
+            background: #aced84;
+            font-size: 17px;
+            border: none;
+            cursor: pointer;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+    <h2>List of all Hotels in the System </h2>
+
+    <!--SEARCH BAR-->
+
+    <div class="topnav">
+        <div class="search-container">
+            <form action="/action_page.php">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!--TABELA-->
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+
+
+            <th>Name</th>
+            <th>Description</th>
+            <th>City</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Edit</th>
+            <th>Delete</th>
+
+        </tr>
+
+        </thead>
+        <tbody>
+        <tr th:each="h: ${hotelsList}">
+            <td th:text="${h.getName()}"></td>
+            <td th:text="${h.getDescription()}"></td>
+            <td th:text="${h.getLocation()}"></td>
+            <td th:text="${h.getLongitude()}"></td>
+            <td th:text="${h.getLatitude()}"></td>
+            <td><a th:href="@{'/edit/hotel/' + ${h.getHotelID()}}">
+                <i class="fa fa-edit" style="font-size:20px;color:green"></i>
+                Edit
+            </a></td>
+            <td><a th:href="@{'/deletehotel/' + ${h.getHotelID()}}">
+                <i class="fa fa-remove" style="font-size:20px;color:green"></i>
+                Delete
+            </a> </td>
+
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

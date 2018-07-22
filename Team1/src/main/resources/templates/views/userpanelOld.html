@@ -127,35 +127,42 @@
 </head>
 <body>
 
-<h2>Welcome, please log in to proceed</h2>
-
-<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+<h2>Booking a Hotel</h2>
+<h3 th:text="${user.getUsername()}"></h3>
+<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Make Reservation</button>
 
 <div id="id01" class="modal">
 
-    <form class="modal-content animate" th:action = "@{/login}" method = "post">
+    <form class="modal-content animate" th:action = "@{/reservation}" method = "post" th:object="${reservation}">
         <div class="imgcontainer">
             <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-           <!-- <img th:src="@{/templates/auth/admin.png}" alt="Avatar" class="avatar" style="height: 350px; width: 350px">
-   -->     </div>
+           <!-- <img src="hotel.png" alt="Avatar" class="avatar">-->
+        </div>
 
         <div class="container">
-            <label for="username"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="username" id="username" required>
+            <select th:field="*{hotel}"  id="dropOperator">
+                    <option value="0" >Select Hotel</option>
+                    <option th:each="h : ${hotels}" th:value="${h.getHotelID()}" th:text="${h.getName()}"></option>
+            </select>
 
-            <label for="password"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" id="password" required>
 
-            <button type="submit">Login</button>
-            <label>
-                <input type="checkbox" checked="checked" name="remember"> Remember me
-            </label>
+           <!-- <input type="date" name="dateFrom" th:field="*{dateFrom}" required>
+            <input type="date" name="dateTo" th:field="*{dateTo}" required>-->
+          <!--  <label for="name"><b>Name</b></label>
+            <input type="text" placeholder="Enter hotel name" name="name" id="name" required>-->
+
+            <!--<label for="description"><b>Description</b></label>
+            <input type="text" placeholder="Enter hotel description" th:field="*{description}" name="description" id="description" required>
+
+            <label for="location"><b>Location</b></label>
+            <input type="text" placeholder="Enter hotel location" name="location" id="location" required>-->
+
+            <input type="hidden" th:value="${user.getUserID()}" th:field="*{user}" name="user">
+            <button type="submit">Make Reservation</button>
+
         </div>
 
-        <div class="container" style="background-color:#f1f1f1">
-            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-            <span class="psw">Forgot <a href="forgotPassword.html">password?</a></span>
-        </div>
+
     </form>
 </div>
 

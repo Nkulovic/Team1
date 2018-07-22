@@ -11,16 +11,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
-import java.awt.*;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class AdminController {
@@ -35,6 +31,37 @@ public class AdminController {
         this.hotelService = hotelService;
         this.reservationService = reservationService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
+    @RequestMapping(value = "/adduserpage")
+    public String showAddUserPage(Model model) {
+        Users user = new Users();
+        model.addAttribute("user", user);
+        return "views/adduserpage";
+    }
+
+    @RequestMapping(value = "/addhotelpage")
+    public String showAddHotelPage(Model model) {
+        Hotel hotel = new Hotel();
+        model.addAttribute("hotel", hotel);
+        return "views/addhotelpage";
+    }
+
+    //  LISTS
+//  shows a page with list of users
+    @RequestMapping(value = "/userslistpage")
+    public String showUsersListPage(Model model) {
+        Iterable<Users> usersList = userService.findAll();
+        model.addAttribute("usersList", usersList);
+        return "views/userslistpage";
+    }
+
+    //  shows a page with list of hotels
+    @RequestMapping(value = "/hotelslistpage")
+    public String showHotelsListPage(Model model) {
+        Iterable<Hotel> hotelsList = hotelService.findAll();
+        model.addAttribute("hotelsList", hotelsList);
+        return "views/hotelslistpage";
     }
 
     @RequestMapping(value = "/adduser", method = RequestMethod.POST)
@@ -103,7 +130,7 @@ public class AdminController {
         }
         else {
             System.out.println("post save " + user.getUsername());
-            userService.updateUser(user.getFirstName(), user.getLastName(), user.getUsername(), user.getPassword(), user.getLongitude(), user.getLatitude(), user.getRole(), user.getUserID());
+            userService.updateUser(user.getFirstName(), user.getLastName(), user.getUsername(), bCryptPasswordEncoder.encode(user.getPassword()), user.getLongitude(), user.getLatitude(), user.getRole(), user.getUserID());
             return "redirect:/admin";
         }
 
@@ -123,6 +150,18 @@ public class AdminController {
     }
 
 
+    @RequestMapping(value = "/deletehotel/{id}")
+    public String deleteHotel(@PathVariable("id") String id) {
+        Hotel hotel = hotelService.findByHotelId(Long.parseLong(id));
+        List<Reservation> reservations = (List<Reservation>) reservationService.findByHotel(hotel);
+        for (Reservation reservation: reservations) {
+            reservationService.delete(reservation);
+        }
+        hotelService.delete(hotel);
+        return "views/hoteladdedview";
+    }
+
+
     @RequestMapping(value = "/edit/hotel/{id}")
     public String editHotel(Model model , @PathVariable("id") String id) {
         Hotel hotel = hotelService.getOne(Long.parseLong(id));
@@ -133,11 +172,10 @@ public class AdminController {
     @RequestMapping(value = "/edithotel", method = RequestMethod.POST)
     public String editHotelInfo(@Valid Hotel hotel, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
-            System.out.println("greska");
+            // error
         }
         else {
-            System.out.println("post save");
-            //hotelService.save(hotel);
+
             hotelService.updateHotel(hotel.getName(), hotel.getDescription(), hotel.getLocation(), hotel.getLongitude(), hotel.getLatitude(), hotel.getHotelID());
             return "redirect:/admin";
         }

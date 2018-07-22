@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {font-family: Arial, Helvetica, sans-serif;}
+
+        /* Full-width input fields */
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        /* Set a style for all buttons */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        /* Extra styles for the cancel button */
+        .cancelbtn {
+            width: auto;
+            padding: 10px 18px;
+            background-color: #f44336;
+        }
+
+        /* Center the image and position the close button */
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+            position: relative;
+        }
+
+        img.avatar {
+            width: 40%;
+            border-radius: 50%;
+        }
+
+        .container {
+            padding: 16px;
+        }
+
+        span.psw {
+            float: right;
+            padding-top: 16px;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            padding-top: 60px;
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button (x) */
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 0;
+            color: #000;
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: red;
+            cursor: pointer;
+        }
+
+        /* Add Zoom Animation */
+        .animate {
+            -webkit-animation: animatezoom 0.6s;
+            animation: animatezoom 0.6s
+        }
+
+        @-webkit-keyframes animatezoom {
+            from {-webkit-transform: scale(0)}
+            to {-webkit-transform: scale(1)}
+        }
+
+        @keyframes animatezoom {
+            from {transform: scale(0)}
+            to {transform: scale(1)}
+        }
+
+        /* Change styles for span and cancel button on extra small screens */
+        @media screen and (max-width: 300px) {
+            span.psw {
+                display: block;
+                float: none;
+            }
+            .cancelbtn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h2>ADMIN PAGE</h2>
+
+<button onclick="document.getElementById('addUser').style.display='block'" style="width:auto;">Add User</button>
+<button onclick="document.getElementById('addHotel').style.display='block'" style="width:auto;">Add Hotel</button>
+<button onclick="document.getElementById('userslist').style.display='block'" style="width:auto;">List Users</button>
+<button onclick="document.getElementById('hotelslist').style.display='block'" style="width:auto;">List Hotels</button>
+
+<div id="addUser" class="modal">
+
+    <form class="modal-content animate" th:action = "@{/adduser}" th:method = "post" th:object="${user}">
+        <div class="imgcontainer">
+            <span onclick="document.getElementById('addUser').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+        </div>
+
+        <div class="container">
+            <input type="text" placeholder="First Name" name="firstname" id="firstname" th:field="*{firstName}" required>
+
+            <input type="text" placeholder="Last Name" name="lastname" id="lastname" th:field="*{lastName}" required>
+
+            <input type="text" placeholder="Username" name="username" id="username" th:field="*{username}" required>
+
+            <input type="password" placeholder="Password" name="password" id="password" th:field="*{password}"  required>
+
+            <input type="text" placeholder="Role" name="role" id="role" th:field="*{role}" required>
+
+            <button type="submit">Add User</button>
+            <label>
+                <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
+        </div>
+
+        <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('addUser').style.display='none'" class="cancelbtn">Cancel</button>
+
+        </div>
+    </form>
+</div>
+
+
+<div id="addHotel" class="modal">
+
+    <form class="modal-content animate" th:action = "@{/addhotel}" method = "post" th:object="${hotel}">
+        <div class="imgcontainer">
+            <span onclick="document.getElementById('addHotel').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+        </div>
+
+        <div class="container">
+            <input type="text" placeholder="Hotel Name" name="name" id="name" th:field="*{name}" required>
+
+            <input type="text" placeholder="Hotel Description" name="description" id="description" th:field="*{description}" required>
+
+            <input type="text" placeholder="City" name="location" id="location" th:field="*{location}" required>
+
+
+            <button type="submit">Add Hotel</button>
+            <label>
+                <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
+        </div>
+
+        <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('addHotel').style.display='none'" class="cancelbtn">Cancel</button>
+
+        </div>
+    </form>
+</div>
+
+<div id="userslist" class="modal">
+
+    <form class="modal-content animate">
+        <div class="imgcontainer">
+            <span onclick="document.getElementById('userslist').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+        </div>
+
+        <div class="container">
+            <h2>List of all Users in the System </h2>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Role</th>
+                    <th>Longitude</th>
+                    <th>Latitude</th>
+                    <th>Deleted</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+
+                </tr>
+
+                </thead>
+                <tbody>
+                <tr th:each="user: ${usersList}">
+                    <td th:text="${user.getUsername()}"></td>
+                    <td th:text="${user.getPassword()}"></td>
+                    <td th:text="${user.getFirstName()}"></td>
+                    <td th:text="${user.getLastName()}"></td>
+                    <td th:text="${user.getRole()}"></td>
+                    <td th:text="${user.getLongitude()}"></td>
+                    <td th:text="${user.getLatitude()}"></td>
+                    <td th:text="${user.getDeleted()}"></td>
+                    <td><a th:href="@{'/edit/user/' + ${user.getUserID()}}"> link</a> </td>
+                    <td><a th:href="@{'/deleteuser/' + ${user.getUserID()}}">delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('listusers').style.display='none'" class="cancelbtn">Cancel</button>
+
+        </div>
+    </form>
+</div>
+
+
+<div id="hotelslist" class="modal">
+
+    <form class="modal-content animate">
+        <div class="imgcontainer">
+            <span onclick="document.getElementById('hotelslist').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+        </div>
+
+        <div class="container">
+            <h2>List of all hotels in the System </h2>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Hotel Name</th>
+                    <th>Description</th>
+                    <th>City</th>
+                    <th>Longitude</th>
+                    <th>Latidude</th>
+
+
+                </tr>
+
+                </thead>
+                <tbody>
+                <tr th:each="h: ${hotelsList}">
+                    <td th:text="${h.getName()}"></td>
+                    <td th:text="${h.getDescription()}"></td>
+                    <td th:text="${h.getLocation()}"></td>
+                    <td th:text="${h.getLongitude()}"></td>
+                    <td th:text="${h.getLatitude()}"></td>
+                    <td><a th:href="@{'/edit/hotel/' + ${h.getHotelID()}}">edit</a></td>
+                    <td><a th:href="@{'/deletehotel/' + ${h.getHotelID()}}">delete</a> </td>
+                </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('listusers').style.display='none'" class="cancelbtn">Cancel</button>
+
+        </div>
+    </form>
+</div>
+
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('addUser');
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    var modal = document.getElementById('addHotel');
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+
+</script>
+
+</body>
+</html>

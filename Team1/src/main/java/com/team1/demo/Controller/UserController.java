@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.List;
-
 @Controller
 public class UserController {
     private UserService userService;
@@ -59,10 +57,15 @@ public class UserController {
     @RequestMapping(value = "/login")
     public String showLoginView() {
         //System.out.println("ugh");
-
-
         return "auth/login";
     }
+
+    @RequestMapping(value = "/")
+    public String showStartPage(){
+        return "views/index";
+    }
+
+
 
     @RequestMapping(value = "/admin")
     public String showAdminPanelView(Model model) {
@@ -97,10 +100,9 @@ public class UserController {
     @RequestMapping(value = "/userpanel/{id}")
     public String showUserPanel(Model model, @PathVariable("id") String id) {
         Users user = userService.findById(Long.parseLong(id));
-        System.out.println("userid");
-        System.out.println(user.getUserID());
+
         if(user == null) {
-            System.out.println("user is null");
+
             return "redirect:/?error=user-is-null";
         }
         Reservation reservation = new Reservation();
@@ -111,5 +113,10 @@ public class UserController {
         model.addAttribute("reservation", reservation);
         // pakuje varijable
         return "views/userpanel";
+    }
+
+    @RequestMapping(value = "/aboutus")
+    public String showAboutUsPag(){
+        return "views/aboutuspage";
     }
 }

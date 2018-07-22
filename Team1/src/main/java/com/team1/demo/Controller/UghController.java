@@ -28,15 +28,15 @@ public class UghController {
 
     @RequestMapping(value = "/insert", method = RequestMethod.GET)
     public void insertSomething() {
-      //  Users user = new Users("janedoe", bCryptPasswordEncoder.encode("pass"), "Jane", "Doe", 12.123, 13.134, "ROLE_USER");
+        //Users user = new Users("janedoe", bCryptPasswordEncoder.encode("pass"), "Jane", "Doe", 12.123, 13.134, "ROLE_USER");
         //Users admin = new Users("admin", bCryptPasswordEncoder.encode("adminpass"), "Administrator", "McAdministrator",0.00, 0.00, "ROLE_ADMIN");
 
-        //userService.save(user);
-       // userService.save(admin);
-       // Users supervisor = new Users("super", bCryptPasswordEncoder.encode("superpass"), "Supervisor", "McSupervisor",0.00, 0.00, "ROLE_SUPERVISOR");
-        //userService.save(supervisor);
-        //Hotel hotel = new Hotel("Hotel Bosnia", "Hotel se nalazi u samom centru grada, u neposrednoj blizini starog dijela grada, Baščaršije. Naš hotel u svojoj ponudi ima 72 komforne i moderno opremljene sobe. Hotel Bosnia obezbjeđuje i usluge banket i ketering servisa u nekoj od naših sala.", "Sarajevo");
-        //hotelService.save(hotel);
+       /* userService.save(user);
+       userService.save(admin);
+        Users supervisor = new Users("super", bCryptPasswordEncoder.encode("superpass"), "Supervisor", "McSupervisor",0.00, 0.00, "ROLE_SUPERVISOR");
+        userService.save(supervisor);
+        Hotel hotel = new Hotel("Hotel Bosnia", "Hotel se nalazi u samom centru grada, u neposrednoj blizini starog dijela grada, Baščaršije. Naš hotel u svojoj ponudi ima 72 komforne i moderno opremljene sobe. Hotel Bosnia obezbjeđuje i usluge banket i ketering servisa u nekoj od naših sala.", "Sarajevo");
+        hotelService.save(hotel);*/
 
     }
 }

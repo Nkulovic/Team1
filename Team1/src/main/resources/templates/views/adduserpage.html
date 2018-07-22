@@ -127,35 +127,37 @@
 </head>
 <body>
 
-<h2>Welcome, please log in to proceed</h2>
+<h2>Welcome Admin, you can add new user to the system here</h2>
 
-<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Add</button>
 
 <div id="id01" class="modal">
 
-    <form class="modal-content animate" th:action = "@{/login}" method = "post">
+    <form class="modal-content animate" th:action = "@{/adduser}" th:method = "post" th:object="${user}">
         <div class="imgcontainer">
             <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-           <!-- <img th:src="@{/templates/auth/admin.png}" alt="Avatar" class="avatar" style="height: 350px; width: 350px">
-   -->     </div>
+         <!--   <img src="images/guest.png" alt="Avatar" class="avatar" style="height: 350px; width: 350px">
+     -->   </div>
 
-        <div class="container">
-            <label for="username"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="username" id="username" required>
+            <div class="container">
+                <input type="text" placeholder="First Name" name="firstname" id="firstname" th:field="*{firstName}" required>
 
-            <label for="password"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" id="password" required>
+                <input type="text" placeholder="Last Name" name="lastname" id="lastname" th:field="*{lastName}" required>
 
-            <button type="submit">Login</button>
-            <label>
-                <input type="checkbox" checked="checked" name="remember"> Remember me
-            </label>
-        </div>
+                <input type="text" placeholder="Username" name="username" id="username" th:field="*{username}" required>
 
-        <div class="container" style="background-color:#f1f1f1">
-            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-            <span class="psw">Forgot <a href="forgotPassword.html">password?</a></span>
-        </div>
+                <input type="password" placeholder="Password" name="password" id="password" th:field="*{password}"  required>
+
+                <input type="text" placeholder="Role" name="role" id="role" th:field="*{role}" required>
+
+                <button type="submit">Add User</button>
+
+            </div>
+
+
+
+
+
     </form>
 </div>
 

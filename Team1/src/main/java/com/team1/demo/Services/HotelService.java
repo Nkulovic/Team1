@@ -5,6 +5,8 @@ import com.team1.demo.Repository.HotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class HotelService {
     @Autowired
@@ -29,5 +31,10 @@ public class HotelService {
 
     public void updateHotel(String name, String descritpion, String location, double longitude, double latitude, Long id){
         hotelRepository.updateHotel(name, descritpion, location, longitude, latitude, id);
+    }
+
+
+    public Hotel findByHotelId(Long id) {
+        return hotelRepository.findByHotelID(id);
     }
 }
