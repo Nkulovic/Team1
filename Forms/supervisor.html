@@ -21,23 +21,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 
-<style>
-    .my-icon {
-        border-radius: 100%;
-        width: 20px;
-        height: 20px;
-        text-align: center;
-        line-height: 20px;
-        color: white;}
-
-    .icon-dc {
-        background: dodgerblue;
-    }
-
-    .icon-sf {
-        background: dodgerblue;
-    }
-</style>
 
 </head>
 <body>
@@ -48,7 +31,7 @@
 <div class="container">
 
 
-    <div id='mapa' class='map' style="width:80%;height:400px;">
+    <div id='map' style="width:80%;height:400px;">
 
     </div>
 
@@ -66,13 +49,10 @@
         console.log(data);
         var atoken = 'pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA';
         L.mapbox.accessToken = atoken;
-        /*var map = L.mapbox.map('map', 'mapbox.light');*/
-        //var myLayer = L.mapbox.featureLayer().addTo(map);
-        var map = L.mapbox.map('mapa', 'mapbox.streets')
-            .setView([37.8, -96], 4);
-
-        var geojson1 = [];
-        var geojson2 = [];
+        var map = L.mapbox.map('map', 'mapbox.streets');
+        var myLayer = L.mapbox.featureLayer().addTo(map);
+        var points = [];
+        var geojson = {};
 
         for (var i = 0; i < data.length; i++) {
             var userLongitude = data[i].userLongitude;
@@ -86,70 +66,47 @@
             var longlat2 = new L.LatLng(hotelLatitude, hotelLongitude);
 
 
-           // L.marker([userLatitude, userLongitude]).addTo(map);
+            L.marker([userLatitude, userLongitude]).addTo(map);
             L.marker([hotelLatitude, hotelLongitude]).addTo(map);
 
             var list = [longlat1, longlat2];
-            var polyline = L.polyline(list, {color: 'blue'}).addTo(map);
+            var polyline = L.polyline(list, {color: 'red'}).addTo(map);
             map.fitBounds(polyline.getBounds());
 
 
-            var point1 = {
+            points.push({
                 "type" : 'Feature',
                 "geometry" : {
                     "type" : 'Point',
-                    "coordinates" : [userLongitude, userLatitude]
+                    "coordinates" : [userLatitude, userLongitude]
                 },
                 "properties" : {
                     'marker-color': '#3bb2d0',
                     'marker-size': 'large',
                     'marker-symbol': 'rocket'
                 }
-            };
-        /*,
-            "properties" : {
-                'marker-color': '#3bb2d0',
-                    'marker-size': 'large',
-                    'marker-symbol': 'rocket'
-            }*/
-            geojson1.push(point1);
+            });
 
-            var point2 = {
+            points.push({
                 "type" : 'Feature',
                 "geometry" : {
                     "type" : 'Point',
-                    "coordinates" : [hotelLongitude, hotelLatitude]
+                    "coordinates" : [hotelLatitude, hotelLongitude]
                 },
                 "properties" : {
-                    'icon' : {
-                        'className': 'my-icon icon-dc', // class name to style
-                        'html': '&#9733;', // add content inside the marker, in this case a star
-                        'iconSize': null // size of icon, use null to set the size in CSS
-                    }
+                    'marker-color': '#3bb2d0',
+                    'marker-size': 'large',
+                    'marker-symbol': 'rocket'
                 }
-            };
-            geojson2.push(point2);
-
+            });
+            
         }
+            geojson.points = points;     
 
-      //  console.log(geojson);
-
-      /*  var mapSimple = L.mapbox.map('map', 'mapbox.light')
-            .setView([37.8, -96], 4);*/
-
-        var myLayer = L.mapbox.featureLayer().addTo(map);
-        var myLayer1 = L.mapbox.featureLayer().setGeoJSON(geojson1).addTo(map);
-
-        myLayer1.setGeoJSON(geojson1);
-
-        /*myLayer.on('layeradd', function(e) {
-            var marker = e.layer,
-                feature = marker.feature;
-            marker.setIcon(L.divIcon(feature.properties.icon));
-        });
-        myLayer.setGeoJSON(geojson2);*/
-
-        map.scrollWheelZoom.disable();
+            var mapSimple = L.mapbox.map('map_simple', 'mapbox.light')
+            .setView([37.8, -96], 4);
+            var myLayer = L.mapbox.featureLayer().setGeoJSON(geojson).addTo(mapSimple);
+            mapSimple.scrollWheelZoom.disable();
 
 
 

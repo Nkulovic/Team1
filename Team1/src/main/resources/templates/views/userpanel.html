@@ -2079,6 +2079,14 @@
                             });
 
                            // console.log(myLayer._geojson.geometry.coordinates[0]);
+                            // 48.13743, 11.57549. munich
+                            /*
+                            //langlat1 = new L.LatLng(myLayer._geojson.geometry.coordinates[1], myLayer._geojson.geometry.coordinates[0]);
+                            langlat1 = new L.LatLng(48.13743, 11.57549);
+
+                            var longy = 11.57549;
+                            var laty = 48.13743;
+                            */
                             langlat1 = new L.LatLng(myLayer._geojson.geometry.coordinates[1], myLayer._geojson.geometry.coordinates[0]);
                             var longy = myLayer._geojson.geometry.coordinates[0];
                             var laty = myLayer._geojson.geometry.coordinates[1];
@@ -2091,6 +2099,8 @@
                             map.fitBounds(polyline.getBounds());
                             // And hide the geolocation button
                             geolocate.parentNode.removeChild(geolocate);
+                            console.log(longitude + ' ' + latitude + ' za dublin');
+                            console.log(longy + ' ' + laty + ' moja lokacija');
 
                             $('input[name="userLongitude"]').val(longy);
                             $('input[name="userLatitude"]').val(laty);

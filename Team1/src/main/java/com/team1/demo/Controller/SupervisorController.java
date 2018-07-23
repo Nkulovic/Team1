@@ -29,7 +29,7 @@ public class SupervisorController {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    @RequestMapping(value = "/getreservations", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/getreservations", method = RequestMethod.GET)
     @ResponseBody
     public List<Hotel> getReservationsList() {
         List<Hotel> reservations = (List<Hotel>) hotelService.findAll();
@@ -39,8 +39,9 @@ public class SupervisorController {
         else {
             return null;
         }
-    }
-    /*@RequestMapping(value = "/getreservations", method = RequestMethod.GET)
+    }*/
+
+    @RequestMapping(value = "/getreservations", method = RequestMethod.GET)
     @ResponseBody
     public List<Reservation> getReservationsList() {
         List<Reservation> reservations = (List<Reservation>) reservationService.findAll();
@@ -50,5 +51,5 @@ public class SupervisorController {
         else {
             return null;
         }
-    }*/
+    }
 }
