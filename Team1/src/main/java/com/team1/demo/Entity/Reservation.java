@@ -20,6 +20,44 @@ public class Reservation {
     @JoinColumn(name = "hotelid", nullable = false)
     Hotel hotel;
 
+    private double userLongitude;
+    private double userLatitude;
+    private double hotelLongitude;
+    private double hotelLatitude;
+
+    public double getHotelLongitude() {
+        return hotelLongitude;
+    }
+
+    public void setHotelLongitude(double hotelLongitude) {
+        this.hotelLongitude = hotelLongitude;
+    }
+
+    public double getHotelLatitude() {
+        return hotelLatitude;
+    }
+
+    public void setHotelLatitude(double hotelLatitude) {
+        this.hotelLatitude = hotelLatitude;
+    }
+
+    public double getUserLongitude() {
+        return userLongitude;
+    }
+
+    public void setUserLongitude(double userLongitude) {
+        this.userLongitude = userLongitude;
+    }
+
+    public double getUserLatitude() {
+        return userLatitude;
+    }
+
+    public void setUserLatitude(double userLatitude) {
+        this.userLatitude = userLatitude;
+    }
+
+
 
     public Users getUser() {
         return user;

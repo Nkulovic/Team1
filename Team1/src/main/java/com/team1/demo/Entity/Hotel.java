@@ -16,8 +16,15 @@ public class Hotel {
     private double longitude;
     private double latitude;
     private String location;
+    private String address;
 
+    public String getAddress() {
+        return address;
+    }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public Long getHotelID() {
         return hotelID;

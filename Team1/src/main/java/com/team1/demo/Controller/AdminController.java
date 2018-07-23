@@ -6,14 +6,13 @@ import com.team1.demo.Entity.Users;
 import com.team1.demo.Services.HotelService;
 import com.team1.demo.Services.ReservationService;
 import com.team1.demo.Services.UserService;
+import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -111,10 +110,12 @@ public class AdminController {
         return "views/userslist";
     }
 
+
+
     @RequestMapping(value = "/edit/user/{id}")
     public String editUser(Model model , @PathVariable("id") String id) {
           Users user = userService.findById(Long.parseLong(id));
-          System.out.println(user.getUserID());
+     //     System.out.println(user.getUserID());
           model.addAttribute("user", user);
         //System.out.println("post pakovanje " + user.getUserID() + " " + user.getFirstName());
        // userService.delete(user);
@@ -124,12 +125,12 @@ public class AdminController {
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String editUserProfile(@Valid Users user, BindingResult bindingResult) {
 
-        System.out.println("prijeee");
+       // System.out.println("prijeee");
         if(bindingResult.hasErrors()) {
-            System.out.println("greska");
+        //    System.out.println("greska");
         }
         else {
-            System.out.println("post save " + user.getUsername());
+       //     System.out.println("post save " + user.getUsername());
             userService.updateUser(user.getFirstName(), user.getLastName(), user.getUsername(), bCryptPasswordEncoder.encode(user.getPassword()), user.getLongitude(), user.getLatitude(), user.getRole(), user.getUserID());
             return "redirect:/admin";
         }
@@ -161,7 +162,28 @@ public class AdminController {
         return "views/hoteladdedview";
     }
 
+   @RequestMapping(value = "/gethotel/{id}")
+    @ResponseBody
+    public Hotel getHotelInfo(@PathVariable("id") String id) {
+        Hotel hotel = hotelService.findByHotelId(Long.parseLong(id));
+        if(hotel != null) {
+            return hotel;
+        }
+        else {
+            return new Hotel();
+        }
 
+    }
+
+    //updatelonglat
+    @RequestMapping(value = "/updatelonglat/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public String getTest(@PathVariable("id") String id, @RequestBody Object data) {
+        Users user = userService.findById(Long.parseLong(id));
+        //double longitude = Double.parseDouble(data)
+        System.out.println(data);
+        return "";
+    }
     @RequestMapping(value = "/edit/hotel/{id}")
     public String editHotel(Model model , @PathVariable("id") String id) {
         Hotel hotel = hotelService.getOne(Long.parseLong(id));

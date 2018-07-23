@@ -159,7 +159,7 @@
 
             <input type="text" placeholder="Hotel Description" name="description" id="description" th:field="*{description}" required>
 
-            <input type="text" placeholder="address" name="address" id="address" th:field="{address}" required>
+            <input type="text" placeholder="address" name="address" id="address" th:field="*{address}" required>
 
             <input type="text" placeholder="City" name="location" id="location" th:field="*{location}"  required>
 
@@ -196,84 +196,6 @@
 
     var atoken = 'pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA';
 
-    /* https://l.facebook.com/l.php?u=https%3A%2F%2Fapi.mapbox.com%2Fgeocoding%2Fv5%2Fmapbox.places%2Fulica%2Bmarsala%2Btita%2Bsarajevo.json%3Faccess_token%3Dpk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA&h=AT0nogQqSW8pLcD4YBQSi5EuAC5YIylRR6K7tTgZ5tdBxS2GJGMiKcU6CrIaeDSgimz5me3UoLSOdgJ00r8kyKfwLLKkC16OWsf5wt6Ek_LqgE3YSOCMlMlGOeKOdwKMYu-Pzg */
-    // After the map style has loaded on the page, add a source layer and default
-    // styling for a single point.
-    /*map.on('load', function() {
-        map.addSource('single-point', {
-            "type": "geojson",
-            "data": {
-                "type": "FeatureCollection",
-                "features": []
-            }
-        });
-
-        map.addLayer({
-            "id": "point",
-            "source": "single-point",
-            "type": "circle",
-            "paint": {
-                "circle-radius": 10,
-                "circle-color": "#007cbf"
-            }
-        });
-
-        // Listen for the `geocoder.input` event that is triggered when a user
-        // makes a selection and add a symbol that matches the result.
-        geocoder.on('result', function(ev) {
-            map.getSource('single-point').setData(ev.result.geometry);
-        });
-    });
-*/
-
-
-    /*if($('input[name="location"]').val() && $('input[name="address"]').val()) {
-        var address = $('input[name="address"]').val();
-        var city = $('input[name="location"]').val();
-
-        var getBBoxURL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + city + '.json?access_token=' + atoken;
-        //Sarajevo.json?access_token=pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA&country=ba'
-
-        minX = 0;
-        minY = 0;
-        maxX = 0;
-        maxY = 0;
-
-        $.ajax({
-            method: 'GET',
-            url: getBBoxURL,
-        }).done(function(data){
-          //  console.log(data.features.bbox)
-            minX = data.features[0].bbox[0];
-            minY = data.features[0].bbox[1];
-            maxX = data.features[0].bbox[2];
-            maxY = data.features[0].bbox[3];
-            console.log(minX + ',' + minY + ',' + maxX + ',' + maxY);
-
-          //  $('input[name="address"]').change(function() {
-                var address = $('input[name="address"]').val();
-                var hotelAddressURL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + address + ' ' + city + '.json?access_token=' + atoken + '&bbox=' + minX + ',' + minY + ',' + maxX + ',' + maxY;
-            //ulica+marsala+tita+sarajevo.json?access_token=pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA&bbox=' + minX + ',' + minY + ',' + maxX + ',' + maxY;
-
-
-                $.ajax({
-                    method: 'GET',
-                    url: hotelAddressURL,
-                }).done(function(data){
-                    var listResults = data.features;
-                   // console.log(data);
-                    for(var i = 0; i < listResults.length; i++) {
-                        console.log(listResults[i].center[0] + ' ' + listResults[i].center[1]);
-                        //if(listResults[i])
-                    }
-                });
-           // });
-
-
-
-         });
-
-    }*/
 
     $('input[name="location"]').change(function() {
         //  var address = $('input[name="address"]').val();
@@ -315,14 +237,23 @@
                     //if(listResults[i])
                 }
 
+                var longitude = listResults[0].center[0];
+              //
+                var latitude = listResults[0].center[1];
+                console.log(latitude + ' ' + longitude);
+
+                $('input[name="longitude"]').val(longitude);
+                $('input[name="latitude"]').val(latitude);
+
+
                 var atoken = 'pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA';
                 L.mapbox.accessToken = atoken;
 
                 console.log(listResults[0].center[1] + listResults[0].center[0]);
                 var mapLeaflet = L.mapbox.map('map-leaflet', 'mapbox.streets')
-                    .setView([listResults[0].center[1], listResults[0].center[0]], 15);
+                    .setView([latitude, longitude], 15);
 
-                L.marker([43.84864, 18.35644]).addTo(mapLeaflet);
+                L.marker([latitude, longitude]).addTo(mapLeaflet);
 
                 mapLeaflet.scrollWheelZoom.disable();
 

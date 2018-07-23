@@ -11,4 +11,5 @@ public interface ReservationRepository extends CrudRepository<Reservation, Long>
 
     Iterable<Reservation> findByUser(Users user);
     Iterable<Reservation> findByHotel(Hotel hotel);
+    Iterable<Reservation> findAll();
 }

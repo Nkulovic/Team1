@@ -6,8 +6,17 @@
     <title>User Panel</title>
        <!-- GOOGLE FONTS-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.css' rel='stylesheet' />
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <style>
 
@@ -1847,8 +1856,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">
-                    <img src="assets/img/palindrom.jpg" style="height: 50px; width: 50px; border-radius: 50%;"/>
-                    <span style="color:#aced84; text-align: center;"> Welcome to Travel Activity Tracker System </span>
+                   <!-- <img src="assets/img/palindrom.jpg" style="height: 50px; width: 50px; border-radius: 50%;"/>
+                   --> <span style="color:#aced84; text-align: center;"> Welcome to Travel Activity Tracker System </span>
                 </a>
 
             </div>
@@ -1932,16 +1941,33 @@
                                     <div class="container">
                                         <select th:field="*{hotel}"  id="dropOperator">
                                             <option value="0" >Select Hotel</option>
-                                            <option th:each="h : ${hotels}" th:value="${h.getHotelID()}" th:text="${h.getName()}"></option>
+                                            <option th:each="h : ${hotels}" th:value="${h.getHotelID()}" th:text="${h.getName()}" ></option>
                                         </select>
+                                        <!--<input type="hidden" th:value=""-->
+
                                         <input type="hidden" th:value="${user.getUserID()}" th:field="*{user}" name="user">
+                                        <input type="hidden" th:value="${user.getLongitude()}" th:field="*{userLongitude}" name="userLongitude">
+                                        <input type="hidden" th:value="${user.getLatitude()}" th:field="*{userLatitude}" name="userLatitude">
+
+                                        <input type="hidden" th:value="${user.getLongitude()}" th:field="*{hotelLongitude}" name="hotelLongitude">
+                                        <input type="hidden" th:value="${user.getLatitude()}" th:field="*{hotelLatitude}" name="hotelLatitude">
                                         <button type="submit">Make Reservation</button>
                                     </div>
-                                </form>
+
+                                    <div id='map' style="width:80%;height:400px;">
+
+                                    </div>
+
+                                    <!--<a href='#' id='geolocate' class='ui-button'>Find me</a>-->
+                                    <!--<div id="map-leaflet" class="map" style="width:80%;height:400px;">
+
+                                    </div>
+-->                                </form>
                             </div>
                             <i class="fas fa-calendar-alt fa-5x"></i>
                             <h4>Make Reservation</h4>
                         </a>
+                        <a href='#' id='geolocate' class='ui-button'>Find me</a>
                     </div>
 
                 </div>
@@ -1977,14 +2003,6 @@
     </div>
 
 
-    <!-- /. WRAPPER  -->
-    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-    <!-- JQUERY SCRIPTS -->
-    <script src="assets/js/jquery-1.10.2.js"></script>
-    <!-- BOOTSTRAP SCRIPTS -->
-    <script src="assets/js/bootstrap.min.js"></script>
-    <!-- CUSTOM SCRIPTS -->
-    <script src="assets/js/custom.js"></script>
 </div>
     <script>
         // Get the modal
@@ -1996,6 +2014,118 @@
                 modal.style.display = "none";
             }
         }
+
+        $('select').on(
+            { "focus": function() {
+                    console.log('clicked!', this, this.value);
+                    this.selectedIndex = -1;
+                }
+                , "change": function() {
+                    choice = $(this).val();
+                    console.log('changed!', this, choice);
+                    this.blur();
+
+                    var hotelId = choice;
+                    var getHotelURL = '/gethotel/' + hotelId ;
+
+                    $.ajax({
+                        method: 'GET',
+                        url: getHotelURL,
+                    }).done(function(data){
+                        //console.log(data.longitude);
+                        var atoken = 'pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA';
+                        L.mapbox.accessToken = atoken;
+
+                        var latitude = data.latitude;
+                        var longitude = data.longitude;
+
+
+                        var langlat2 = new L.LatLng(latitude, longitude);
+
+                        var map = L.mapbox.map('map', 'mapbox.streets');
+
+                        var myLayer = L.mapbox.featureLayer().addTo(map);
+                        L.marker([data.latitude, data.longitude]).addTo(map);
+
+                // This uses the HTML5 geolocation API, which is available on
+                // most mobile browsers and modern browsers, but not in Internet Explorer
+
+                        if (!navigator.geolocation) {
+                            geolocate.innerHTML = 'Geolocation is not available';
+                        } else {
+                            map.locate();
+
+                        }
+
+
+                // Once we've got a position, zoom and center the map
+                // on it, and add a single marker.
+                        var langlat1 = 0;
+                        //langlat1 = new L.LatLng(43.8562586, 18.413076300);
+
+                        map.on('locationfound', function(e) {
+                            map.fitBounds(e.bounds);
+                             myLayer.setGeoJSON({
+                                type: 'Feature',
+                                geometry: {
+                                    type: 'Point',
+                                    coordinates: [e.latlng.lng, e.latlng.lat]
+                                },
+                                properties: {
+                                    'title': 'You are here!',
+                                    'marker-color': '#ff8888',
+                                    'marker-symbol': 'star'
+                                }
+                            });
+
+                           // console.log(myLayer._geojson.geometry.coordinates[0]);
+                            langlat1 = new L.LatLng(myLayer._geojson.geometry.coordinates[1], myLayer._geojson.geometry.coordinates[0]);
+                            var longy = myLayer._geojson.geometry.coordinates[0];
+                            var laty = myLayer._geojson.geometry.coordinates[1];
+                            console.log(langlat1);
+
+                            var list = [langlat1, langlat2];
+
+                            var polyline = L.polyline(list, {color: 'red'}).addTo(map);
+
+                            map.fitBounds(polyline.getBounds());
+                            // And hide the geolocation button
+                            geolocate.parentNode.removeChild(geolocate);
+
+                            $('input[name="userLongitude"]').val(longy);
+                            $('input[name="userLatitude"]').val(laty);
+
+                            $('input[name="hotelLongitude"]').val(longitude);
+                            $('input[name="hotelLatitude"]').val(latitude);
+
+                          //  var data
+                           // var userID = $('input[name="user"]').val();
+                          //  var sendLongyLatyURL = '/updatelonglat/' + userID;
+
+                          /*  $.ajax({
+                                url: sendLongyLatyURL,
+                                type: "POST",
+                                data: JSON.stringify({ longitude: longy, latitude: laty}),
+                                contentType: "application/json",
+                                success: function (result) {
+                                    alert("success" + result);
+                                },
+                                error: function (result) {
+                                    alert("failure" + result);
+                                }
+                            });*/
+                        });
+
+                    // If the user chooses not to allow their location
+                    // to be shared, display an error message.
+                        map.on('locationerror', function() {
+                            geolocate.innerHTML = 'Position could not be found';
+                        });
+
+                    });
+                }
+            });
+
     </script>
 </body>
 </html>

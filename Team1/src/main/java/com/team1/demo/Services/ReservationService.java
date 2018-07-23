@@ -27,4 +27,8 @@ public class ReservationService {
     public void delete(Reservation reservation) {
         reservationRepository.delete(reservation);
     }
+
+    public Iterable<Reservation> findAll() {
+        return reservationRepository.findAll();
+    }
 }
