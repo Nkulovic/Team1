@@ -129,14 +129,14 @@
 
 <h2>Welcome Admin, you can add new user to the system here</h2>
 
-<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Add</button>
+<button onclick="document.getElementById('addUser').style.display='block'" style="width:auto;">Add</button>
 
-<div id="id01" class="modal">
+<div id="addUser" class="modal">
 
     <form class="modal-content animate" th:action = "@{/adduser}" th:method = "post" th:object="${user}">
         <div class="imgcontainer">
-            <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-         <!--   <img src="images/guest.png" alt="Avatar" class="avatar" style="height: 350px; width: 350px">
+            <span onclick="document.getElementById('addUser').style.display='none'" class="close" title="Close Modal">&times;</span>
+         <!--   <images src="images/guest.png" alt="Avatar" class="avatar" style="height: 350px; width: 350px">
      -->   </div>
 
             <div class="container">
@@ -154,16 +154,12 @@
 
             </div>
 
-
-
-
-
     </form>
 </div>
 
 <script>
     // Get the modal
-    var modal = document.getElementById('id01');
+    var modal = document.getElementById('addUser');
 
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {

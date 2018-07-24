@@ -1,6 +1,7 @@
 package com.team1.demo.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.catalina.User;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.util.Date;
 
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
