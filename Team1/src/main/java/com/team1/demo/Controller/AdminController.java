@@ -13,9 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class AdminController {
@@ -52,6 +54,7 @@ public class AdminController {
     public String showUsersListPage(Model model) {
         Iterable<Users> usersList = userService.findAll();
         model.addAttribute("usersList", usersList);
+        model.addAttribute("user", new Users());
         return "views/userslistpage";
     }
 
@@ -64,43 +67,49 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/adduser", method = RequestMethod.POST)
-    public String addUser(@Valid Users user, BindingResult bindingResult) {
+    public String addUser(@Valid Users user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if(bindingResult.hasErrors()) {
             //return "redirect:/userpanel";
+            redirectAttributes.addFlashAttribute("failMessage", "Something went wrong! User not added.");
+
         }
         else
         {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             userService.save(user);
-            return "redirect:/adduser" ;
+            redirectAttributes.addFlashAttribute("successMessage", "User added!");
+            return "redirect:/admin" ;
         }
         return "";
     }
 
     @RequestMapping(value = "/adduser", method = RequestMethod.GET)
     public String userAddedResult() {
-        return "views/useraddedview";
+        return "views/admin";
     }
 
 
     @RequestMapping(value = "/addhotel", method = RequestMethod.POST)
-    public String addHotel(@Valid Hotel hotel, BindingResult bindingResult) {
+    public String addHotel(@Valid Hotel hotel, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if(bindingResult.hasErrors()) {
             //return "redirect:/userpanel";
+            redirectAttributes.addFlashAttribute("failMessage", "Something went wrong! Hotel not added.");
+
         }
         else
         {
             hotelService.save(hotel);
-            return "redirect:/addhotel" ;
+            redirectAttributes.addFlashAttribute("successMessage", "Hotel added!");
+            return "redirect:/admin" ;
         }
         return "";
     }
 
     @RequestMapping(value = "/addhotel", method = RequestMethod.GET)
     public String hotelAddedResult() {
-        return "views/hoteladdedview";
+        return "views/admin";
     }
 
     @RequestMapping(value = "/userslist", method = RequestMethod.GET)
@@ -109,8 +118,6 @@ public class AdminController {
         model.addAttribute("users", userslist);
         return "views/userslist";
     }
-
-
 
     @RequestMapping(value = "/edit/user/{id}")
     public String editUser(Model model , @PathVariable("id") String id) {
@@ -122,44 +129,69 @@ public class AdminController {
         return "views/editprofile";
 
     }
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String editUserProfile(@Valid Users user, BindingResult bindingResult) {
+    @RequestMapping(value = "/edit/user/{id}", method = RequestMethod.POST)
+    public String editUserProfile(@PathVariable("id") Long id, @RequestParam Map params, RedirectAttributes redirectAttributes) {
 
        // System.out.println("prijeee");
-        if(bindingResult.hasErrors()) {
+        if(id == null) {
         //    System.out.println("greska");
+            redirectAttributes.addFlashAttribute("failMessage", "Error updating user!");
+
         }
         else {
        //     System.out.println("post save " + user.getUsername());
-            userService.updateUser(user.getFirstName(), user.getLastName(), user.getUsername(), bCryptPasswordEncoder.encode(user.getPassword()), user.getLongitude(), user.getLatitude(), user.getRole(), user.getUserID());
-            return "redirect:/admin";
+            userService.updateUser(params.get("firstName").toString(),
+                                   params.get("lastName").toString(),
+                                   params.get("username").toString(),
+                                   bCryptPasswordEncoder.encode(params.get("password").toString()),
+                                   Double.parseDouble(params.get("longitude").toString()),
+                                   Double.parseDouble(params.get("latitude").toString()),
+                                   params.get("role").toString(),
+                                   id);
+            redirectAttributes.addFlashAttribute("successMessage", "User updated!");
+            return "redirect:/userslistpage";
         }
 
         return "";
     }
 
     @RequestMapping(value = "/deleteuser/{id}")
-    public String deleteUser(Model model , @PathVariable("id") String id) {
-        Users user = userService.findById(Long.parseLong(id));
-        List<Reservation> reservations = (List<Reservation>) reservationService.findByUser(user);
-        for (Reservation reservation : reservations) {
-            reservationService.delete(reservation);
+    public String deleteUser(Model model , @PathVariable("id") String id, RedirectAttributes redirectAttributes) {
+        if(id == null) {
+            redirectAttributes.addFlashAttribute("failMessage", "Error deleting user!");
         }
-        //userService.userDeleted(Long.parseLong(id));
-        userService.delete(user);
-        return "views/useraddedview";
+        else {
+            Users user = userService.findById(Long.parseLong(id));
+            List<Reservation> reservations = (List<Reservation>) reservationService.findByUser(user);
+            for (Reservation reservation : reservations) {
+                reservationService.delete(reservation);
+            }
+
+            userService.delete(user);
+            redirectAttributes.addFlashAttribute("successMessage", "User deleted!");
+            return "redirect:/userslistpage";
+        }
+        return "";
+
     }
 
 
     @RequestMapping(value = "/deletehotel/{id}")
-    public String deleteHotel(@PathVariable("id") String id) {
-        Hotel hotel = hotelService.findByHotelId(Long.parseLong(id));
-        List<Reservation> reservations = (List<Reservation>) reservationService.findByHotel(hotel);
-        for (Reservation reservation: reservations) {
-            reservationService.delete(reservation);
+    public String deleteHotel(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
+        if(id == null) {
+            redirectAttributes.addFlashAttribute("failMessage", "Error deleting hotel!");
+        } else {
+            Hotel hotel = hotelService.findByHotelId(Long.parseLong(id));
+            List<Reservation> reservations = (List<Reservation>) reservationService.findByHotel(hotel);
+            for (Reservation reservation: reservations) {
+                reservationService.delete(reservation);
+            }
+            hotelService.delete(hotel);
+            redirectAttributes.addFlashAttribute("successMessage", "Hotel deleted!");
+            return "redirect:/hotelslistpage";
         }
-        hotelService.delete(hotel);
-        return "views/hoteladdedview";
+        return "";
+
     }
 
    @RequestMapping(value = "/gethotel/{id}")
@@ -191,15 +223,21 @@ public class AdminController {
         return "views/edithotel";
 
     }
-    @RequestMapping(value = "/edithotel", method = RequestMethod.POST)
-    public String editHotelInfo(@Valid Hotel hotel, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
+    @RequestMapping(value = "/edit/hotel/{id}", method = RequestMethod.POST)
+    public String editHotelInfo(@PathVariable("id") Long id, @RequestParam Map params, RedirectAttributes redirectAttributes) {
+        if(id == null) {
             // error
+            redirectAttributes.addFlashAttribute("failMessage", "Error updating hotel!");
         }
         else {
-
-            hotelService.updateHotel(hotel.getName(), hotel.getDescription(), hotel.getLocation(), hotel.getLongitude(), hotel.getLatitude(), hotel.getHotelID());
-            return "redirect:/admin";
+            hotelService.updateHotel(params.get("name").toString(),
+                    params.get("description").toString(),
+                    params.get("location").toString(),
+                    Double.parseDouble(params.get("longitude").toString()),
+                    Double.parseDouble(params.get("latitude").toString()),
+                    id);
+            redirectAttributes.addFlashAttribute("successMessage", "Hotel updated");
+            return "redirect:/hotelslistpage";
         }
 
         return "";

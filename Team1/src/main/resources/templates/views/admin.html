@@ -180,7 +180,7 @@
                     <a href="adminPanel.html" ><i class="fa fa-desktop "></i>Dashboard </a>
                 </li>
 
-                <li>
+               <!-- <li>
                     <a href="#"><i class="fa fa-qrcode "></i>My Link One</a>
                 </li>
                 <li>
@@ -195,7 +195,7 @@
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-edit "></i>My Link Five </a>
-                </li>
+                </li>-->
 
             </ul>
         </div>
@@ -267,17 +267,23 @@
                                 -->   </div>
 
                                 <div class="container">
-                                    <input type="text" placeholder="First Name" name="firstname" id="firstname" th:field="*{firstName}" required>
+                                    <input type="text" placeholder="Enter new Username" name="username" th:value="${user.getUsername()}"  th:field="*{username}" required>
 
-                                    <input type="text" placeholder="Last Name" name="lastname" id="lastname" th:field="*{lastName}" required>
+                                    <input type="password" placeholder="Enter new password" name="password" th:value="${user.getPassword()}"  th:field="*{password}" required>
 
-                                    <input type="text" placeholder="Username" name="username" id="username" th:field="*{username}" required>
+                                    <input type="text" placeholder="Enter first name" name="firstName" th:value="${user.getFirstName()}"  th:field="*{firstName}" required>
 
-                                    <input type="password" placeholder="Password" name="password" id="password" th:field="*{password}"  required>
+                                    <input type="text" placeholder="Enter last name" name="lastName" th:value="${user.getLastName()}" th:field="*{lastName}" required>
 
-                                    <input type="text" placeholder="Role" name="role" id="role" th:field="*{role}" required>
+                                    <input type="text" placeholder="Enter role" name="role" th:value="${user.getRole()}" th:field="*{role}" required>
 
-                                    <button type="submit">Add User</button>
+                                    <input type="text" placeholder="Enter longitude" name="longitude"  th:value="${user.getLongitude()}" th:field="*{longitude}" required>
+
+                                    <input type="text" placeholder="Enter latitude" name="latitude" th:value="${user.getLatitude()}"  th:field="*{latitude}" required>
+
+                                    <input type="hidden" th:value="${user.getUserID()}" th:field="*{userID}">
+
+                                    <button type="submit">Save Changes</button>
 
                                 </div>
 
@@ -344,30 +350,20 @@
                     </div>
                 </div>
 
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-                    <div class="div-square">
-                        <a href="blank.html" >
-                            <i class="far fa-calendar fa-5x"></i>
+            </div>
 
-
-                            <h4>Manage Reservations</h4>
-                        </a>
+            <div class="row">
+                <div class="col-sm-12 ">
+                    <div class="alert alert-success" th:if="${successMessage}">
+                        <strong th:text="${successMessage}">Success!</strong>
+                    </div>
+                </div>
+                <div class="col-sm-12 " >
+                    <div class="alert alert-danger" th:if="${failMessage}">
+                        <strong th:text="${failMessage}">Danger!</strong>
                     </div>
                 </div>
             </div>
-
-
-
-            <!--ADMIN ZA HOTELE IDE OVDJE-->
-
-
-
-
-
-
-
-
-            <!-- /. PAGE INNER  -->
         </div>
         <!-- /. PAGE WRAPPER  -->
     </div>

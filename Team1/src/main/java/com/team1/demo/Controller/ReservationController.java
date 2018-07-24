@@ -14,6 +14,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -31,32 +32,26 @@ public class ReservationController {
     }
 
     @RequestMapping(value = "/reservation", method = RequestMethod.POST)
-    public String reservationView(@Valid Reservation reservation, BindingResult bindingResult) {
-        //System.out.println("prije ifa");
-//        System.out.println(reservation.getUser().getUserID());
-        if(bindingResult.hasErrors()) {
-            //return "redirect:/userpanel";
-           /* System.out.println("============================= greska");
+    public String reservationView(@Valid Reservation reservation, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-            List<FieldError> errors = bindingResult.getFieldErrors();
-            for (FieldError error : errors ) {
-                System.out.println (error.getObjectName() + " - " + error.getDefaultMessage());
-            }*/
+        if(bindingResult.hasErrors()) {
+           redirectAttributes.addFlashAttribute("failMessage", "Error creating the reservation!");
         }
         else
         {
             Users user = userService.findById(reservation.getUser().getUserID());
             userService.updateUser(user.getFirstName(),user.getLastName(), user.getUsername(), user.getPassword(), reservation.getUserLongitude(), reservation.getUserLatitude(), user.getRole(), user.getUserID());
             reservationService.save(reservation);
-           // System.out.println("nije greska");
-            return "redirect:/reservation" ;
+            redirectAttributes.addFlashAttribute("successMessage", "Reservation completed!");
+
+            return "redirect:/userpanel/" + reservation.getUser().getUserID() ;
         }
         return "";
     }
 
     @RequestMapping(value = "/reservation", method = RequestMethod.GET)
     public String reservationResult() {
-        return "views/reservation";
+        return "views/userpanel";
     }
 }
 

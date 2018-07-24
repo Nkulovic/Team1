@@ -11,14 +11,11 @@
     <link th:href="@{/css/custom.css}" rel="stylesheet" />
     <link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css' rel='stylesheet' />
     <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
     <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
-    <script src='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.js'></script>
-    <link href='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.css' rel='stylesheet' />
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <style>
@@ -252,6 +249,7 @@
 
                                         <input type="hidden" th:value="${user.getLongitude()}" th:field="*{hotelLongitude}" name="hotelLongitude">
                                         <input type="hidden" th:value="${user.getLatitude()}" th:field="*{hotelLatitude}" name="hotelLatitude">
+
                                         <button type="submit">Make Reservation</button>
                                     </div>
                                     <!--ovaj div-->
@@ -268,7 +266,7 @@
                             <i class="fas fa-calendar-alt fa-5x"></i>
                             <h4>Make Reservation</h4>
                         </a>
-                        <a href='#' id='geolocate' class='ui-button'>Find me</a>
+                        <a href='#' id='geolocate' class='ui-button'></a>
                     </div>
 
                 </div>
@@ -289,6 +287,18 @@
             </div>
 
 
+            <div class="row">
+                <div class="col-sm-12 ">
+                    <div class="alert alert-success" th:if="${successMessage}">
+                        <strong th:text="${successMessage}">Success!</strong>
+                    </div>
+                </div>
+                <div class="col-sm-12 " >
+                    <div class="alert alert-danger" th:if="${failMessage}">
+                        <strong th:text="${failMessage}">Danger!</strong>
+                    </div>
+                </div>
+            </div>
             <!-- /. PAGE INNER  -->
         </div>
         <!-- /. PAGE WRAPPER  -->
