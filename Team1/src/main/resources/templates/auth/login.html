@@ -82,7 +82,8 @@
             background-color: #fefefe;
             margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
             border: 1px solid #888;
-            width: 80%; /* Could be more or less, depending on screen size */
+            width: 60%;
+            /* Could be more or less, depending on screen size */
         }
 
         /* The Close Button (x) */
@@ -142,9 +143,9 @@
 <div id="id01" class="modal">
 
     <form class="modal-content animate" th:action = "@{/login}" method = "post">
-       <!-- <div class="imgcontainer">
-            <img th:src="@{images/palindrom.jpg}" style="height: 50px; width: 50px; border-radius: 50%;"/>
-       </div>-->
+        <div class="imgcontainer">
+            <img src="https://cdn3.iconfinder.com/data/icons/security-3-1/512/access-512.png" style="height: 100px; width: 100px; border-radius: 50%;"/>
+       </div>
 
         <div class="container">
             <label for="username"><b>Username</b></label>
@@ -154,6 +155,17 @@
             <input type="password" placeholder="Enter Password" name="password" id="password" required>
 
             <button type="submit">Login</button>
+
+
+                   <!-- <div class="alert alert-success" th:if="${successMessage}">
+                        <strong th:text="${successMessage}">Success!</strong>
+                    </div>
+
+                    <div class="alert alert-danger" th:if="${failMessage}">
+                        <strong th:text="${failMessage}">Danger!</strong>
+                    </div>-->
+
+
 
         </div>
 
@@ -166,14 +178,7 @@
 
 <script>
     // Get the modal
-    var modal = document.getElementById('id01');
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
 </script>
 
 </body>

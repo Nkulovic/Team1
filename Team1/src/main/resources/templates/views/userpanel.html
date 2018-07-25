@@ -95,6 +95,7 @@
             margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
             border: 1px solid #888;
             width: 80%; /* Could be more or less, depending on screen size */
+            height: 800px;
         }
 
         /* The Close Button (x) */
@@ -161,9 +162,12 @@
                 </a>
             </div>
             <span class="logout-spn" >
-                  <a href="#" style="color:#aced84;">LOGOUT</a>
-
-                </span>
+                <form th:action="@{/logout}" th:method="post">
+                    <button type="submit" class="btn btn-link">
+                        LOGOUT
+                    </button>
+                </form>
+            </span>
         </div>
     </div>
     <!-- /. NAV TOP  -->
@@ -174,7 +178,7 @@
                     <a th:href="@{/userpanel}" ><i class="fa fa-desktop "></i>Dashboard </a>
                 </li>
 
-                <li>
+              <!--  <li>
                     <a href="#"><i class="fa fa-qrcode "></i>My Link One</a>
                 </li>
                 <li>
@@ -190,7 +194,7 @@
                 <li>
                     <a href="#"><i class="fa fa-edit "></i>My Link Five </a>
                 </li>
-
+-->
             </ul>
         </div>
 
@@ -253,7 +257,7 @@
                                         <button type="submit">Make Reservation</button>
                                     </div>
                                     <!--ovaj div-->
-                                    <div id='map' style="width:80%;height:400px;">
+                                    <div id='map' style="width:80%;height:600px;margin-left:150px;">
 
                                     </div>
 

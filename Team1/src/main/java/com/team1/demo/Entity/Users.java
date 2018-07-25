@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -18,12 +20,27 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userID;
 
+    @NotNull
+    @Size(min=5, max=30)
     private String username;
+
+    @NotNull
+    @Size(min=5)
     private String password;
+
+    @NotNull
+    @Size(min=2, max=30)
     private String firstName;
+
+    @NotNull
+    @Size(min=2, max=30)
     private String lastName;
+
     private double longitude;
     private double latitude;
+
+    @NotNull
+    @Size(min=9, max=30)
     private String role;
     private Boolean isDeleted;
 

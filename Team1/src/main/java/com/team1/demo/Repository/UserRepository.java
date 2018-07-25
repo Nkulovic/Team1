@@ -13,7 +13,9 @@ import java.util.Set;
 public interface UserRepository extends CrudRepository<Users, Long> {
 
     Users findByUserID(Long id);
+
     Users findByUsername(String username);
+
 
     @Query("SELECT DISTINCT u.role from Users u")
     Set<String> findDistinctRole();

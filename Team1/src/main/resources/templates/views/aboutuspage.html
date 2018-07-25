@@ -17,7 +17,7 @@
 <div class="w3-top">
     <div class="w3-bar w3-white w3-padding w3-card" style="letter-spacing:4px;">
         <a href="#home" class="w3-bar-item w3-button">Tourist agency "Palindrom"</a>
-        <img src="agencyImages/nasLogo.jpg" class="w3-round w3-image w3-opacity-min" width="50" height="50">
+        <img th:src="@{images/palindrom.jpg}"  width="50" height="50">
         <!-- Right-sided navbar links. Hide them on small screens -->
         <div class="w3-right w3-hide-small">
             <a href="#about us" class="w3-bar-item w3-button">About Us</a>
@@ -127,26 +127,26 @@
             .prev, .next,.text {font-size: 11px}
         }
     </style>
-    </head>
+</header>
     <body>
 
     <div class="slideshow-container">
 
         <div class="mySlides fade">
             <div class="numbertext">1 / 3</div>
-            <img src="agencyImages/svijet.jpg" style="width:100%">
+            <img th:src="@{images/svijet.jpeg}" style="width:100%">
             <div class="text">Caption Text</div>
         </div>
 
         <div class="mySlides fade">
             <div class="numbertext">2 / 3</div>
-            <img src="agencyImages/putokaz.jpg" style="width:100%">
+            <img th:src="@{images/putokaz.jpg}" style="width:100%">
             <div class="text">Caption Two</div>
         </div>
 
         <div class="mySlides fade">
             <div class="numbertext">3 / 3</div>
-            <img src="agencyImages/avion.jpg" style="width:100%">
+            <img th:src="@{images/avion.jpg}" style="width:100%">
             <div class="text">Caption Three</div>
         </div>
 
@@ -163,7 +163,6 @@
     </div>
 
     <script>
-
 
         var slideIndex = 1;
         showSlides(slideIndex);

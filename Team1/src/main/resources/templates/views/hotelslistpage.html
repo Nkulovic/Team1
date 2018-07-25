@@ -268,11 +268,23 @@
 
     <style>
         /* CSS ZA MODAL FORMU */
+        .mybutton {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .mybutton:hover {
+            opacity: 0.8;
+        }
 
         body {font-family: Arial, Helvetica, sans-serif;}
 
         /* Full-width input fields */
-
 
         .form-container input[type=text], .form-container input[type=password] {
             width: 100%;
@@ -347,7 +359,8 @@
             background-color: #fefefe;
             margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
             border: 1px solid #888;
-            width: 80%; /* Could be more or less, depending on screen size */
+            width: 60%; /* Could be more or less, depending on screen size */
+            height: 500px;
         }
 
         /* The Close Button (x) */
@@ -602,13 +615,15 @@
 
             <form class="modal-content animate" th:action="@{'/edit/hotel/' + ${h1.getHotelID()}}" method="post">
                 <div class="imgcontainer">
+<!--
                     <span th:onclick="@{document.getElementById(${h1.getHotelID()}).style.display='none'}" class="close" title="Close Modal">&times;</span>
+-->
 <!--
                     <img src="images/user.png" alt="Avatar" class="avatar" style="height: 350px; width: 350px">
 -->
                 </div>
 
-                <div class="container">
+                <div class="form-container">
                     <input type="text" placeholder="Enter new name" name="name" th:value="${h1.getName()}"  required>
 
                     <input type="text" placeholder="Enter new description" name="description" th:value="${h1.getDescription()}"  required>
@@ -621,7 +636,7 @@
 
                     <input type="hidden" th:value="${h1.getHotelID()}" >
 
-                    <button type="submit">Save Changes</button>
+                    <button class="mybutton" type="submit">Save Changes</button>
 
                 </div>
 

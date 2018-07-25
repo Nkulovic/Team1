@@ -212,9 +212,12 @@
             </div>
 
             <span class="logout-spn" >
-                  <a href="#" style="color:#aced84;">LOGOUT</a>
-
-                </span>
+                 <form th:action="@{/logout}" th:method="post">
+                    <button type="submit" class="btn btn-link">
+                        LOGOUT
+                    </button>
+                </form>
+            </span>
         </div>
     </div>
     <!-- /. NAV TOP  -->
@@ -223,9 +226,9 @@
             <ul class="nav" id="main-menu">
 
                 <li class="active-link">
-                    <a href="supervisorPanel.html" ><i class="fa fa-desktop "></i>Dashboard </a>
+                    <a th:href="@{/supervisor}" ><i class="fa fa-desktop "></i>Dashboard </a>
                 </li>
-
+<!--
                 <li>
                     <a href="#"><i class="fa fa-qrcode "></i>My Link One</a>
                 </li>
@@ -241,7 +244,7 @@
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-edit "></i>My Link Five </a>
-                </li>
+                </li>-->
 
             </ul>
         </div>

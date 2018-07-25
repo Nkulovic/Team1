@@ -58,6 +58,8 @@ public class UserService {
         userRepository.updateUser(firstName, lastName, username, password, longitude, latitude, role, id);
     }
 
+
+
     /*public Users findOne(Long id){
         userRepository.find
     }*/

@@ -12,10 +12,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -50,6 +53,7 @@ public class AdminController {
 
     //  LISTS
 //  shows a page with list of users
+    //  @RequestParam(name = "searchInput", required = false) String searchInput
     @RequestMapping(value = "/userslistpage")
     public String showUsersListPage(Model model) {
         Iterable<Users> usersList = userService.findAll();
@@ -71,7 +75,20 @@ public class AdminController {
 
         if(bindingResult.hasErrors()) {
             //return "redirect:/userpanel";
-            redirectAttributes.addFlashAttribute("failMessage", "Something went wrong! User not added.");
+           List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+           String result = "";
+
+           for (int i = 0; i <  fieldErrors.size() - 1; i++) {
+               result += fieldErrors.get(i).getField();
+               result += ", ";
+           }
+           result += fieldErrors.get(fieldErrors.size() - 1).getField();
+           if(fieldErrors.size() > 1)
+               redirectAttributes.addFlashAttribute("failMessage", "Something went wrong! " + result + " fields are not valid. User not added.");
+            else
+               redirectAttributes.addFlashAttribute("failMessage", "Something went wrong! " + result + " field is not valid. User not added.");
+
+            return "redirect:/admin";
 
         }
         else
@@ -81,7 +98,7 @@ public class AdminController {
             redirectAttributes.addFlashAttribute("successMessage", "User added!");
             return "redirect:/admin" ;
         }
-        return "";
+        //return "";
     }
 
     @RequestMapping(value = "/adduser", method = RequestMethod.GET)
@@ -95,7 +112,19 @@ public class AdminController {
 
         if(bindingResult.hasErrors()) {
             //return "redirect:/userpanel";
-            redirectAttributes.addFlashAttribute("failMessage", "Something went wrong! Hotel not added.");
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            String result = "";
+
+            for (int i = 0; i <  fieldErrors.size() - 1; i++) {
+                result += fieldErrors.get(i).getField();
+                result += ", ";
+            }
+            result += fieldErrors.get(fieldErrors.size() - 1).getField();
+            if(fieldErrors.size() > 1)
+                redirectAttributes.addFlashAttribute("failMessage", "Something went wrong! " + result + " fields are not valid. Hotel not added.");
+            else
+                redirectAttributes.addFlashAttribute("failMessage", "Something went wrong! " + result + " field is not valid. Hotel not added.");
+            return "redirect:/admin";
 
         }
         else
@@ -104,7 +133,7 @@ public class AdminController {
             redirectAttributes.addFlashAttribute("successMessage", "Hotel added!");
             return "redirect:/admin" ;
         }
-        return "";
+
     }
 
     @RequestMapping(value = "/addhotel", method = RequestMethod.GET)
@@ -241,5 +270,24 @@ public class AdminController {
         }
 
         return "";
+    }
+
+    @RequestMapping(value = "/searchuser", method = RequestMethod.POST)
+    public String searchUserByUsername(@RequestParam Map params, RedirectAttributes redirectAttributes, Model model) {
+        List<Users> list = new ArrayList<>();
+        Users user = userService.findByUsername(params.get("searchInput").toString());
+        list.add(user);
+
+        if(list != null) {
+            model.addAttribute("usersList", list);
+
+            return "redirect:/userslistpage";
+        }
+        else {
+            redirectAttributes.addAttribute("failMessage", "User not found");
+            return "redirext:/userslistpage";
+        }
+
+
     }
 }
