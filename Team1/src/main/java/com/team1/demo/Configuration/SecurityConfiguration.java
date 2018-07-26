@@ -31,7 +31,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/login","/insert", "/aboutus", "/account/confirmation", "/registration", "/password/forgotten", "/password/reset").permitAll()
+                .antMatchers("/admin","/adduserpage", "/addhotelpage", "/userslistpage", "/hotelslistpage", "/adduser", "/addhotel", "/userslist", "/edit/user", "/edit/user/", "/deleteuser", "/deleteuser/", "/deletehotel", "/deletehotel/", "/gethotel", "/gethotel/", "/updatelonglat", "/updatelonglat/","/edit/hotel", "/edit/hotel/").access("hasAnyRole('ROLE_ADMIN')")
+                .antMatchers("/userpanel", "/userpanel/", "/userpanel/**", "/reservation").access("hasAnyRole('ROLE_USER')")
+                .antMatchers("/supervisor","/getreservations").access("hasAnyRole('ROLE_SUPERVISOR')")
+                .antMatchers("/", "/login", "/aboutus", "/contactus","/account/confirmation", "/registration", "/password/forgotten", "/password/reset").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

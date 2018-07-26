@@ -104,7 +104,6 @@ public class AdminController {
         return "admin";
     }
 
-
     @RequestMapping(value = "/addhotel", method = RequestMethod.POST)
     public String addHotel(@Valid Hotel hotel, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
@@ -156,7 +155,9 @@ public class AdminController {
         return "views/editprofile";
 
     }
+
     @RequestMapping(value = "/edit/user/{id}", method = RequestMethod.POST)
+
     public String editUserProfile(@PathVariable("id") Long id, @RequestParam Map params, RedirectAttributes redirectAttributes) {
         Users user = userService.findOne(id).get();
 
@@ -252,12 +253,14 @@ public class AdminController {
         return "";
     }
     @RequestMapping(value = "/edit/hotel/{id}")
+
     public String editHotel(Model model , @PathVariable("id") String id) {
         Hotel hotel = hotelService.getOne(Long.parseLong(id));
         model.addAttribute("hotel", hotel);
         return "views/edithotel";
 
     }
+
     @RequestMapping(value = "/edit/hotel/{id}", method = RequestMethod.POST)
     public String editHotelInfo(@PathVariable("id") Long id, @RequestParam Map params, RedirectAttributes redirectAttributes) {
         if(id == null) {

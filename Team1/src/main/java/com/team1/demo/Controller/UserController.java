@@ -124,4 +124,9 @@ public class UserController {
     public String showAboutUsPag(){
         return "views/aboutuspage";
     }
+
+    @RequestMapping(value = "/contactus")
+    public String showContactUsPag(){
+        return "views/contactuspage";
+    }
 }
