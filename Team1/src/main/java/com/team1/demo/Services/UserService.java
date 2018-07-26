@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -36,6 +37,8 @@ public class UserService {
         return userRepository.findByUserID(id);
     }
 
+    public Optional<Users> findOne(Long id) { return userRepository.findById(id); }
+
     public Users findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
@@ -50,12 +53,30 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+/*
     public void userDeleted(Long id) {
         userRepository.userDeleted(id);
     }
+*/
 
-    public void updateUser(String firstName, String lastName, String username, String password, double longitude, double latitude, String role, Long id){
-        userRepository.updateUser(firstName, lastName, username, password, longitude, latitude, role, id);
+    public void updateUser(String firstName, String lastName, String username, double longitude, double latitude, String role, String email,Long id){
+        userRepository.updateUser(firstName, lastName, username, longitude, latitude, role, email, id);
+    }
+
+    public Users findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public String getNewToken() {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
+
+    public Users findByConfirmToken(String token) {
+        return userRepository.findByConfirmToken(token);
+    }
+
+    public Users findByPasswordToken(String token) {
+        return userRepository.findByPasswordToken(token);
     }
 
 

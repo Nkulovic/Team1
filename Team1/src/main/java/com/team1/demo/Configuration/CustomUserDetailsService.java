@@ -11,7 +11,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -20,6 +22,18 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Users user = userRepository.findByUsername(username);
+        if(null == user){
+            throw new UsernameNotFoundException("User with username : " + username + " not found.");
+        }else{
+            List<String> userRole = new ArrayList<>();
+            userRole.add(user.getRole());
+            return new CustomUserDetails(user, userRole);
+        }
+    }
+
+    /*@Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Users user = userRepository.findByUsername(username);
@@ -30,6 +44,6 @@ public class CustomUserDetailsService implements UserDetailsService {
        // }
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
-    }
+    }*/
 
 }

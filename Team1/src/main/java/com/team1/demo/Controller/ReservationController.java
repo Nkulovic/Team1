@@ -40,7 +40,7 @@ public class ReservationController {
         else
         {
             Users user = userService.findById(reservation.getUser().getUserID());
-            userService.updateUser(user.getFirstName(),user.getLastName(), user.getUsername(), user.getPassword(), reservation.getUserLongitude(), reservation.getUserLatitude(), user.getRole(), user.getUserID());
+            userService.updateUser(user.getFirstName(),user.getLastName(), user.getUsername(), reservation.getUserLongitude(), reservation.getUserLatitude(), user.getRole(), user.getEmail(), user.getUserID());
             reservationService.save(reservation);
             redirectAttributes.addFlashAttribute("successMessage", "Reservation completed!");
 

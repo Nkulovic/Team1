@@ -1,456 +1,413 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>User Panel</title>
+    <title>TATS</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
-
-    <link th:href="@{/css/font-awesome.css}" rel="stylesheet" />
-    <link th:href="@{/css/custom.css}" rel="stylesheet" />
-    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css' rel='stylesheet' />
     <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
     <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-
-    <style>
-        /*body {font-family: Arial, Helvetica, sans-serif;}
-*/
-        /* Full-width input fields */
-        input[type=text], input[type=password] {
-            width: 100%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-
-        /* Set a style for all buttons */
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        button:hover {
-            opacity: 0.8;
-        }
-
-        /* Extra styles for the cancel button */
-        .cancelbtn {
-            width: auto;
-            padding: 10px 18px;
-            background-color: #f44336;
-        }
-
-        /* Center the image and position the close button */
-        .imgcontainer {
-            text-align: center;
-            margin: 24px 0 12px 0;
-            position: relative;
-        }
-
-        img.avatar {
-            width: 40%;
-            border-radius: 50%;
-        }
-
-        .container {
-            padding: 16px;
-        }
-
-        span.psw {
-            float: right;
-            padding-top: 16px;
-        }
-
-        /* The Modal (background) */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-            padding-top: 60px;
-        }
-
-        /* Modal Content/Box */
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-            border: 1px solid #888;
-            width: 80%; /* Could be more or less, depending on screen size */
-            height: 800px;
-        }
-
-        /* The Close Button (x) */
-        .close {
-            position: absolute;
-            right: 25px;
-            top: 0;
-            color: #000;
-            font-size: 35px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: red;
-            cursor: pointer;
-        }
-
-        /* Add Zoom Animation */
-        .animate {
-            -webkit-animation: animatezoom 0.6s;
-            animation: animatezoom 0.6s
-        }
-
-        @-webkit-keyframes animatezoom {
-            from {-webkit-transform: scale(0)}
-            to {-webkit-transform: scale(1)}
-        }
-
-        @keyframes animatezoom {
-            from {transform: scale(0)}
-            to {transform: scale(1)}
-        }
-
-        /* Change styles for span and cancel button on extra small screens */
-        @media screen and (max-width: 300px) {
-            span.psw {
-                display: block;
-                float: none;
-            }
-            .cancelbtn {
-                width: 100%;
-            }
-        }
-
-
-    </style>
-
+    <link href="https://fonts.googleapis.com/css?family=Gaegu:300,400,700" rel="stylesheet">
 </head>
+
+<style>
+    .my-header {
+        height: 75px;
+        font-family: 'Roboto', sans-serif;
+        color: white;
+        background-color: #254A25;
+    }
+    .my-header h1 {
+        margin-top: 15px;
+        margin-left: 20px;
+    }
+    .logout-div {
+
+    }
+    .logout-div button {
+        margin-top: 26px;float: right;
+        color: white;
+
+    }
+    .logout-div button:hover{
+        text-decoration: none;
+        color: lightgreen;
+    }
+    i:hover{
+        color: #254A25;
+        cursor: pointer;
+    }
+
+    .panel-login {
+        border-color: #ccc;
+        -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+        -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+        box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+    }
+    .panel-login>.panel-heading {
+        color: #00415d;
+        background-color: #fff;
+        border-color: #fff;
+        text-align:center;
+    }
+    .panel-login>.panel-heading a{
+        text-decoration: none;
+        color: #666;
+        font-weight: bold;
+        font-size: 15px;
+        -webkit-transition: all 0.1s linear;
+        -moz-transition: all 0.1s linear;
+        transition: all 0.1s linear;
+    }
+    .panel-login>.panel-heading a.active{
+        color: #029f5b;
+        font-size: 18px;
+    }
+    .panel-login>.panel-heading hr{
+        margin-top: 10px;
+        margin-bottom: 0px;
+        clear: both;
+        border: 0;
+        height: 1px;
+        background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));
+        background-image: -moz-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+        background-image: -ms-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+        background-image: -o-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+    }
+    .panel-login input[type="text"],.panel-login input[type="email"],.panel-login input[type="password"] {
+        height: 45px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+        -webkit-transition: all 0.1s linear;
+        -moz-transition: all 0.1s linear;
+        transition: all 0.1s linear;
+    }
+    .panel-login input:hover,
+    .panel-login input:focus {
+        outline:none;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        border-color: #ccc;
+    }
+    .btn-login {
+        background-color: #59B2E0;
+        outline: none;
+        color: #fff;
+        font-size: 14px;
+        height: auto;
+        font-weight: normal;
+        padding: 14px 0;
+        text-transform: uppercase;
+        border-color: #59B2E6;
+    }
+    .btn-login:hover,
+    .btn-login:focus {
+        color: #fff;
+        background-color: #53A3CD;
+        border-color: #53A3CD;
+    }
+    .forgot-password {
+        text-decoration: underline;
+        color: #888;
+    }
+    .forgot-password:hover,
+    .forgot-password:focus {
+        text-decoration: underline;
+        color: #666;
+    }
+
+    .btn-register {
+        background-color: #1CB94E;
+        outline: none;
+        color: #fff;
+        font-size: 14px;
+        height: auto;
+        font-weight: normal;
+        padding: 14px 0;
+        text-transform: uppercase;
+        border-color: #1CB94A;
+    }
+    .btn-register:hover,
+    .btn-register:focus {
+        color: #fff;
+        background-color: #1CA347;
+        border-color: #1CA347;
+    }
+
+    .my-btn-link {
+        text-decoration: none;
+        color: #000;
+    }
+    
+    .my-btn-link:hover {
+        color: #254A25;
+        text-decoration: none;
+
+    }
+</style>
 <body>
 
-<div id="wrapper">
-    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: #4CAF50">
-        <div class="adjust-nav">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+<div class="container-fluid">
+    <div class="row my-header">
+        <div class="col-sm-10" >
+            <h1>User Panel</h1>
+        </div>
+        <div class="col-sm-2 logout-div">
+            <form th:action="@{/logout}" th:method="post">
+                <button type="submit" class="btn btn-link">
+                    <i class="fa fa-sign-out"></i> Logout
                 </button>
-                <a class="navbar-brand" href="#">
-                <images src="@{images/palindrom.jpg}" style="height: 50px; width: 50px; border-radius: 50%;"/>
-                   <span style="color:#aced84; text-align: center;"> Welcome to Travel Activity Tracker System </span>
-                </a>
-            </div>
-            <span class="logout-spn" >
-                <form th:action="@{/logout}" th:method="post">
-                    <button type="submit" class="btn btn-link">
-                        LOGOUT
-                    </button>
-                </form>
-            </span>
+            </form>
         </div>
     </div>
-    <!-- /. NAV TOP  -->
-    <nav class="navbar-default navbar-side" role="navigation">
-        <div class="sidebar-collapse">
-            <ul class="nav" id="main-menu">
-                <li class="active-link">
-                    <a th:href="@{/userpanel}" ><i class="fa fa-desktop "></i>Dashboard </a>
-                </li>
-
-              <!--  <li>
-                    <a href="#"><i class="fa fa-qrcode "></i>My Link One</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-bar-chart-o"></i>My Link Two</a>
-                </li>
-
-                <li>
-                    <a href="#"><i class="fa fa-edit "></i>My Link Three </a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-table "></i>My Link Four</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-edit "></i>My Link Five </a>
-                </li>
--->
-            </ul>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="col-sm-10 text-center" style="margin: auto; margin-top: 120px;border: 2px solid #050505;padding-top: 30px;padding-bottom: 30px;border-radius: 5px; text-decoration: none; color: black">
+                <div class="col-sm-12">
+                    <i class="fa fa-calendar-plus-o fa-5x" style="font-size: 200px;" data-toggle="modal" data-target="#reservationModal"></i>
+                </div>
+                <div class="col-sm-12">
+                    <button type="button" class="btn btn-link my-btn-link" data-toggle="modal" data-target="#reservationModal">New Reservation</button>
+                </div>
+            </div>
         </div>
-
-    </nav>
-    <!-- /. NAV SIDE  -->
-    <div id="page-wrapper" >
-        <div id="page-inner">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h2>USER DASHBOARD</h2>
+        <div class="col-sm-6">
+            <div class="col-sm-10 text-center" style="margin: auto; margin-top: 120px;border: 2px solid #050505;padding-top: 30px;padding-bottom: 30px;border-radius: 5px;">
+                <div class="col-sm-12">
+                    <i class="fa fa-calendar fa-5x" style="font-size: 200px;" data-toggle="modal" data-target="#reservationHistoryModal"></i>
                 </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-lg-12 ">
-                    <div class="alert alert-info" style="background-color: #4CAF50">
-                        <strong style="color: #aced84">Welcome User ! </strong> <span style="color: #aced84"> Select one of the options below. </span>
-                    </div>
-
+                <div class="col-sm-12">
+                    <button type="button" class="btn btn-link my-btn-link" data-toggle="modal" data-target="#reservationHistoryModal">Reservation History</button>
                 </div>
-            </div>
-
-            <!-- /. ROW  -->
-
-            <div class="row text-center pad-top">
-
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-                    <div class="div-square">
-                        <a href="userCard.html" >
-                            <i class="fa fa-user fa-5x"></i>
-                            <h4>User Profile </h4>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-                    <div class="div-square">
-                        <a href="#" onclick="document.getElementById('makeReservation').style.display='block'" >
-                            <div id="makeReservation" class="modal">
-                                <form class="modal-content animate" th:action = "@{/reservation}" method = "post" th:object="${reservation}">
-                                    <div class="imgcontainer">
-                                        <span onclick="document.getElementById('makeReservation').style.display='none'" class="close" title="Close Modal">&times;</span>
-                                        <!-- <images src="hotel.png" alt="Avatar" class="avatar">-->
-                                    </div>
-                                    <div class="container">
-                                        <select th:field="*{hotel}"  id="dropOperator">
-                                            <option value="0" >Select Hotel</option>
-                                            <option th:each="h : ${hotels}" th:value="${h.getHotelID()}" th:text="${h.getName()}" ></option>
-                                        </select>
-                                        <!--<input type="hidden" th:value=""-->
-
-                                        <input type="hidden" th:value="${user.getUserID()}" th:field="*{user}" name="user">
-                                        <input type="hidden" th:value="${user.getLongitude()}" th:field="*{userLongitude}" name="userLongitude">
-                                        <input type="hidden" th:value="${user.getLatitude()}" th:field="*{userLatitude}" name="userLatitude">
-
-                                        <input type="hidden" th:value="${user.getLongitude()}" th:field="*{hotelLongitude}" name="hotelLongitude">
-                                        <input type="hidden" th:value="${user.getLatitude()}" th:field="*{hotelLatitude}" name="hotelLatitude">
-
-                                        <button type="submit">Make Reservation</button>
-                                    </div>
-                                    <!--ovaj div-->
-                                    <div id='map' style="width:80%;height:600px;margin-left:150px;">
-
-                                    </div>
-
-                                    <!--<a href='#' id='geolocate' class='ui-button'>Find me</a>-->
-                                    <!--<div id="map-leaflet" class="map" style="width:80%;height:400px;">
-
-                                    </div>
--->                                </form>
-                            </div>
-                            <i class="fas fa-calendar-alt fa-5x"></i>
-                            <h4>Make Reservation</h4>
-                        </a>
-                        <a href='#' id='geolocate' class='ui-button'></a>
-                    </div>
-
-                </div>
-
-
-
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-                    <div class="div-square">
-
-                        <a href="blank.html" >
-                            <i class="fas fa-list-ul fa-5x"></i>
-
-                            <h4>Booking History</h4>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div class="row">
-                <div class="col-sm-12 ">
-                    <div class="alert alert-success" th:if="${successMessage}">
-                        <strong th:text="${successMessage}">Success!</strong>
-                    </div>
-                </div>
-                <div class="col-sm-12 " >
-                    <div class="alert alert-danger" th:if="${failMessage}">
-                        <strong th:text="${failMessage}">Danger!</strong>
-                    </div>
-                </div>
-            </div>
-            <!-- /. PAGE INNER  -->
-        </div>
-        <!-- /. PAGE WRAPPER  -->
-    </div>
-    <div class="footer" style="background-color: #4CAF50;">
-
-
-        <div class="row">
-            <div class="col-lg-12" style="text-align: center">
-                <span style="color:#aced84">&copy; 2018  Team 1 - Palindrom | Travel Activity Tracker System </span>
             </div>
         </div>
     </div>
-
-
+    <div class="row">
+        <div class="col-sm-12 ">
+            <div class="alert alert-success" th:if="${successMessage}">
+                <strong th:text="${successMessage}">Success!</strong>
+            </div>
+        </div>
+        <div class="col-sm-12 " >
+            <div class="alert alert-danger" th:if="${failMessage}">
+                <strong th:text="${failMessage}">Danger!</strong>
+            </div>
+        </div>
+    </div>
 </div>
-    <script>
-        // Get the modal
-        var modal = document.getElementById('id01');
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+
+<div class="modal fade" id="reservationHistoryModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Reservation History</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Address</th>
+                            <th>City</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="reservation: ${history}">
+                            <td th:text="${reservation.getHotel().getName()}"></td>
+                            <td th:text="${reservation.getHotel().getDescription()}"></td>
+                            <td th:text="${reservation.getHotel().getAddress()}"></td>
+                            <td th:text="${reservation.getHotel().getLocation()}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="reservationModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">New Reservation</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <form th:id="add-reservation-form" th:action="@{/reservation}" th:object="${reservation}" method="post" role="form" >
+                    <div class="form-group">
+                        <select class="form-control" id="dropOperator" th:field="*{hotel}">
+                            <option value="0" >Select Hotel</option>
+                            <option th:each="h : ${hotels}" th:value="${h.getHotelID()}" th:text="${h.getName()}" ></option>
+                        </select>
+                    </div>
+                    <div id="map" class="map col-sm-12" style="height: 500px;"></div>
+                    <a href='#' id='geolocate' class='ui-button'>Find me</a>
+
+                    <input type="hidden" th:value="${user.getUserID()}" th:field="*{user}" name="user">
+                    <input type="hidden" th:value="${user.getLongitude()}" th:field="*{userLongitude}" name="userLongitude">
+                    <input type="hidden" th:value="${user.getLatitude()}" th:field="*{userLatitude}" name="userLatitude">
+
+                    <input type="hidden" th:value="${user.getLongitude()}" th:field="*{hotelLongitude}" name="hotelLongitude">
+                    <input type="hidden" th:value="${user.getLatitude()}" th:field="*{hotelLatitude}" name="hotelLatitude">                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary" style="background-color: #4CAF50;" th:form="add-reservation-form">Make Reservation</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    $('select').on(
+        { "focus": function() {
+                console.log('clicked!', this, this.value);
+                this.selectedIndex = -1;
             }
-        }
+            , "change": function() {
+                choice = $(this).val();
+                console.log('changed!', this, choice);
+                this.blur();
 
-        $('select').on(
-            { "focus": function() {
-                    console.log('clicked!', this, this.value);
-                    this.selectedIndex = -1;
-                }
-                , "change": function() {
-                    choice = $(this).val();
-                    console.log('changed!', this, choice);
-                    this.blur();
+                var hotelId = choice;
+                var getHotelURL = '/gethotel/' + hotelId ;
 
-                    var hotelId = choice;
-                    var getHotelURL = '/gethotel/' + hotelId ;
+                $.ajax({
+                    method: 'GET',
+                    url: getHotelURL,
+                }).done(function(data){
+                    //console.log(data.longitude);
+                    var atoken = 'pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA';
+                    L.mapbox.accessToken = atoken;
 
-                    $.ajax({
-                        method: 'GET',
-                        url: getHotelURL,
-                    }).done(function(data){
-                        //console.log(data.longitude);
-                        var atoken = 'pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA';
-                        L.mapbox.accessToken = atoken;
+                    var latitude = data.latitude;
+                    var longitude = data.longitude;
 
-                        var latitude = data.latitude;
-                        var longitude = data.longitude;
+                    var langlat2 = new L.LatLng(latitude, longitude);
 
+                    var map = L.mapbox.map('map', 'mapbox.streets');
 
-                        var langlat2 = new L.LatLng(latitude, longitude);
+                    var myLayer = L.mapbox.featureLayer().addTo(map);
+                    L.marker([data.latitude, data.longitude]).addTo(map);
 
-                        var map = L.mapbox.map('map', 'mapbox.streets');
+                    // This uses the HTML5 geolocation API, which is available on
+                    // most mobile browsers and modern browsers, but not in Internet Explorer
 
-                        var myLayer = L.mapbox.featureLayer().addTo(map);
-                        L.marker([data.latitude, data.longitude]).addTo(map);
+                    if (!navigator.geolocation) {
+                        geolocate.innerHTML = 'Geolocation is not available';
+                    } else {
+                        map.locate();
 
-                // This uses the HTML5 geolocation API, which is available on
-                // most mobile browsers and modern browsers, but not in Internet Explorer
-
-                        if (!navigator.geolocation) {
-                            geolocate.innerHTML = 'Geolocation is not available';
-                        } else {
-                            map.locate();
-
-                        }
+                    }
 
 
-                // Once we've got a position, zoom and center the map
-                // on it, and add a single marker.
-                        var langlat1 = 0;
-                        //langlat1 = new L.LatLng(43.8562586, 18.413076300);
+                    // Once we've got a position, zoom and center the map
+                    // on it, and add a single marker.
+                    var langlat1 = 0;
+                    //langlat1 = new L.LatLng(43.8562586, 18.413076300);
 
-                        map.on('locationfound', function(e) {
-                            map.fitBounds(e.bounds);
-                             myLayer.setGeoJSON({
-                                type: 'Feature',
-                                geometry: {
-                                    type: 'Point',
-                                    coordinates: [e.latlng.lng, e.latlng.lat]
-                                },
-                                properties: {
-                                    'title': 'You are here!',
-                                    'marker-color': '#ff8888',
-                                    'marker-symbol': 'star'
-                                }
-                            });
-
-                           // console.log(myLayer._geojson.geometry.coordinates[0]);
-                            // 48.13743, 11.57549. munich
-                            /*
-                            //langlat1 = new L.LatLng(myLayer._geojson.geometry.coordinates[1], myLayer._geojson.geometry.coordinates[0]);
-                            langlat1 = new L.LatLng(48.13743, 11.57549);
-
-                            var longy = 11.57549;
-                            var laty = 48.13743;
-                            */
-                            langlat1 = new L.LatLng(myLayer._geojson.geometry.coordinates[1], myLayer._geojson.geometry.coordinates[0]);
-                            var longy = myLayer._geojson.geometry.coordinates[0];
-                            var laty = myLayer._geojson.geometry.coordinates[1];
-                            console.log(langlat1);
-
-                            var list = [langlat1, langlat2];
-
-                            var polyline = L.polyline(list, {color: 'red'}).addTo(map);
-
-                            map.fitBounds(polyline.getBounds());
-                            // And hide the geolocation button
-                            geolocate.parentNode.removeChild(geolocate);
-                            console.log(longitude + ' ' + latitude + ' za dublin');
-                            console.log(longy + ' ' + laty + ' moja lokacija');
-
-                            $('input[name="userLongitude"]').val(longy);
-                            $('input[name="userLatitude"]').val(laty);
-
-                            $('input[name="hotelLongitude"]').val(longitude);
-                            $('input[name="hotelLatitude"]').val(latitude);
-
-                          //  var data
-                           // var userID = $('input[name="user"]').val();
-                          //  var sendLongyLatyURL = '/updatelonglat/' + userID;
-
-                          /*  $.ajax({
-                                url: sendLongyLatyURL,
-                                type: "POST",
-                                data: JSON.stringify({ longitude: longy, latitude: laty}),
-                                contentType: "application/json",
-                                success: function (result) {
-                                    alert("success" + result);
-                                },
-                                error: function (result) {
-                                    alert("failure" + result);
-                                }
-                            });*/
+                    map.on('locationfound', function(e) {
+                        map.fitBounds(e.bounds);
+                        myLayer.setGeoJSON({
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [e.latlng.lng, e.latlng.lat]
+                            },
+                            properties: {
+                                'title': 'You are here!',
+                                'marker-color': '#ff8888',
+                                'marker-symbol': 'star'
+                            }
                         });
+
+                        // console.log(myLayer._geojson.geometry.coordinates[0]);
+                        // 48.13743, 11.57549. munich
+                        /*
+                        //langlat1 = new L.LatLng(myLayer._geojson.geometry.coordinates[1], myLayer._geojson.geometry.coordinates[0]);
+                        langlat1 = new L.LatLng(48.13743, 11.57549);
+
+                        var longy = 11.57549;
+                        var laty = 48.13743;
+                        */
+                        langlat1 = new L.LatLng(myLayer._geojson.geometry.coordinates[1], myLayer._geojson.geometry.coordinates[0]);
+                        var longy = myLayer._geojson.geometry.coordinates[0];
+                        var laty = myLayer._geojson.geometry.coordinates[1];
+
+                        console.log('ovdje' + langlat1);
+
+                        var list = [langlat1, langlat2];
+
+                        var polyline = L.polyline(list, {color: 'red'}).addTo(map);
+
+                        map.fitBounds(polyline.getBounds());
+                        // And hide the geolocation button
+                        geolocate.parentNode.removeChild(geolocate);
+
+                        console.log(longitude + ' ' + latitude + ' za dublin');
+                        console.log(longy + ' ' + laty + ' moja lokacija');
+
+                        $('input[name="userLongitude"]').val(longy);
+                        $('input[name="userLatitude"]').val(laty);
+
+                        $('input[name="hotelLongitude"]').val(longitude);
+                        $('input[name="hotelLatitude"]').val(latitude);
+
+                        //  var data
+                        // var userID = $('input[name="user"]').val();
+                        //  var sendLongyLatyURL = '/updatelonglat/' + userID;
+
+                        /*  $.ajax({
+                              url: sendLongyLatyURL,
+                              type: "POST",
+                              data: JSON.stringify({ longitude: longy, latitude: laty}),
+                              contentType: "application/json",
+                              success: function (result) {
+                                  alert("success" + result);
+                              },
+                              error: function (result) {
+                                  alert("failure" + result);
+                              }
+                          });*/
+                    });
 
                     // If the user chooses not to allow their location
                     // to be shared, display an error message.
-                        map.on('locationerror', function() {
-                            geolocate.innerHTML = 'Position could not be found';
-                        });
-
+                    map.on('locationerror', function() {
+                        geolocate.innerHTML = 'Position could not be found';
                     });
-                }
-            });
 
-    </script>
+                });
+            }
+        });
+
+</script>
 </body>
 </html>

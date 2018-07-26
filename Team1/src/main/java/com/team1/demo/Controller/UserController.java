@@ -5,6 +5,7 @@ import com.team1.demo.Entity.Hotel;
 import com.team1.demo.Entity.Reservation;
 import com.team1.demo.Entity.Users;
 import com.team1.demo.Services.HotelService;
+import com.team1.demo.Services.ReservationService;
 import com.team1.demo.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -20,13 +21,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UserController {
     private UserService userService;
     private HotelService hotelService;
+    private ReservationService reservationService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserController(UserService userService, HotelService hotelService) {
+    public UserController(UserService userService, HotelService hotelService, ReservationService reservationService) {
 
         this.userService = userService;
         this.hotelService = hotelService;
+        this.reservationService = reservationService;
     }
 
     @RequestMapping(value = "/default", method = RequestMethod.GET)
@@ -55,9 +58,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login")
-    public String showLoginView() {
+    public String showLoginView(Users user, Model model) {
         //System.out.println("ugh");
-        return "auth/login";
+        model.addAttribute("user",user);
+        return "auth/loginregister";
     }
 
     @RequestMapping(value = "/")
@@ -111,6 +115,7 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("hotels", hotels);
         model.addAttribute("reservation", reservation);
+        model.addAttribute("history", reservationService.findByUser(user));
         // pakuje varijable
         return "views/userpanel";
     }

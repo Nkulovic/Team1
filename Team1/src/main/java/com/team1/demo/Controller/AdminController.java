@@ -6,14 +6,12 @@ import com.team1.demo.Entity.Users;
 import com.team1.demo.Services.HotelService;
 import com.team1.demo.Services.ReservationService;
 import com.team1.demo.Services.UserService;
-import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -67,6 +65,7 @@ public class AdminController {
     public String showHotelsListPage(Model model) {
         Iterable<Hotel> hotelsList = hotelService.findAll();
         model.addAttribute("hotelsList", hotelsList);
+        model.addAttribute("hotel", new Hotel());
         return "views/hotelslistpage";
     }
 
@@ -74,7 +73,6 @@ public class AdminController {
     public String addUser(@Valid Users user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if(bindingResult.hasErrors()) {
-            //return "redirect:/userpanel";
            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
            String result = "";
 
@@ -96,14 +94,14 @@ public class AdminController {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             userService.save(user);
             redirectAttributes.addFlashAttribute("successMessage", "User added!");
-            return "redirect:/admin" ;
+            return "redirect:/userslistpage" ;
         }
         //return "";
     }
 
     @RequestMapping(value = "/adduser", method = RequestMethod.GET)
     public String userAddedResult() {
-        return "views/admin";
+        return "admin";
     }
 
 
@@ -124,21 +122,21 @@ public class AdminController {
                 redirectAttributes.addFlashAttribute("failMessage", "Something went wrong! " + result + " fields are not valid. Hotel not added.");
             else
                 redirectAttributes.addFlashAttribute("failMessage", "Something went wrong! " + result + " field is not valid. Hotel not added.");
-            return "redirect:/admin";
+            return "redirect:/hotelslistpage";
 
         }
         else
         {
             hotelService.save(hotel);
             redirectAttributes.addFlashAttribute("successMessage", "Hotel added!");
-            return "redirect:/admin" ;
+            return "redirect:/hotelslistpage" ;
         }
 
     }
 
     @RequestMapping(value = "/addhotel", method = RequestMethod.GET)
     public String hotelAddedResult() {
-        return "views/admin";
+        return "admin";
     }
 
     @RequestMapping(value = "/userslist", method = RequestMethod.GET)
@@ -160,23 +158,31 @@ public class AdminController {
     }
     @RequestMapping(value = "/edit/user/{id}", method = RequestMethod.POST)
     public String editUserProfile(@PathVariable("id") Long id, @RequestParam Map params, RedirectAttributes redirectAttributes) {
+        Users user = userService.findOne(id).get();
 
-       // System.out.println("prijeee");
-        if(id == null) {
-        //    System.out.println("greska");
+        if(user == null) {
             redirectAttributes.addFlashAttribute("failMessage", "Error updating user!");
 
         }
         else {
-       //     System.out.println("post save " + user.getUsername());
-            userService.updateUser(params.get("firstName").toString(),
+
+            /*userService.updateUser(params.get("firstName").toString(),
                                    params.get("lastName").toString(),
                                    params.get("username").toString(),
-                                   bCryptPasswordEncoder.encode(params.get("password").toString()),
                                    Double.parseDouble(params.get("longitude").toString()),
                                    Double.parseDouble(params.get("latitude").toString()),
                                    params.get("role").toString(),
-                                   id);
+                                   params.get("email").toString(),
+                                   id);*/
+            user.setFirstName(params.get("firstName").toString());
+            user.setLastName(params.get("lastName").toString());
+            user.setUsername(params.get("username").toString());
+            user.setLongitude(Double.parseDouble(params.get("longitude").toString()));
+            user.setLatitude(Double.parseDouble(params.get("latitude").toString()));
+            user.setRole(params.get("role").toString());
+            user.setEmail(params.get("email").toString());
+            userService.save(user);
+
             redirectAttributes.addFlashAttribute("successMessage", "User updated!");
             return "redirect:/userslistpage";
         }
@@ -262,6 +268,7 @@ public class AdminController {
             hotelService.updateHotel(params.get("name").toString(),
                     params.get("description").toString(),
                     params.get("location").toString(),
+                    params.get("address").toString(),
                     Double.parseDouble(params.get("longitude").toString()),
                     Double.parseDouble(params.get("latitude").toString()),
                     id);

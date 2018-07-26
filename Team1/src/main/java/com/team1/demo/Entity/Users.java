@@ -15,7 +15,6 @@ import javax.validation.constraints.Size;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Users {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userID;
@@ -39,10 +38,16 @@ public class Users {
     private double longitude;
     private double latitude;
 
-    @NotNull
-    @Size(min=9, max=30)
     private String role;
-    private Boolean isDeleted;
+
+    private String email;
+    private String confirmToken;
+    private String reactivateToken;
+    private String passwordToken;
+
+
+
+    private Boolean enabled;
 
 
     public Users(){}
@@ -55,15 +60,30 @@ public class Users {
         this.longitude = longitude;
         this.latitude = latitude;
         this.role = role;
-        this.isDeleted = false;
-    }
-    public Boolean getDeleted() {
-        return isDeleted;
     }
 
-    public void setDeleted(Boolean deleted) {
-        isDeleted = deleted;
+    public Users(Users user) {
+        this.role = user.role;
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
+        this.email = user.email;
+        this.username = user.username;
+        this.password = user.password;
+        this.longitude = user.longitude;
+        this.latitude = user.latitude;
+        this.passwordToken = user.passwordToken;
+        this.confirmToken = user.confirmToken;
+        this.reactivateToken = user.reactivateToken;
+        this.enabled = user.enabled;
     }
+
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Long getUserID() {
         return userID;
     }
@@ -126,5 +146,36 @@ public class Users {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getConfirmToken() {
+        return confirmToken;
+    }
+
+    public void setConfirmToken(String confirmToken) {
+        this.confirmToken = confirmToken;
+    }
+
+    public String getReactivateToken() {
+        return reactivateToken;
+    }
+
+    public void setReactivateToken(String reactivateToke) {
+        this.reactivateToken = reactivateToke;
+    }
+
+    public String getPasswordToken() {
+        return passwordToken;
+    }
+
+    public void setPasswordToken(String passwordToken) {
+        this.passwordToken = passwordToken;
+    }
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

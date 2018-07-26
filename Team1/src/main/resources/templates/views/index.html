@@ -6,6 +6,7 @@
     <title>Welcome to TATS</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Gaegu:300,400,700" rel="stylesheet">
 
 
     <!--<link rel="stylesheet" type="text/css" href="static/css/style.css" />
@@ -24,6 +25,9 @@
             font-family: 'Roboto', sans-serif;
             background-repeat: no-repeat;
             background-attachment: fixed;
+            background-image: url("http://www.pptgrounds.com/wp-content/uploads/2013/08/Travel-Backpacks-Backgrounds.jpg");
+            background-position: bottom;
+            background-repeat: no-repeat;
         }
 
         /* INDEX */
@@ -41,7 +45,7 @@
             overflow: hidden;
             position: relative;
             float:left;
-            background: #fff;
+            background: #e4b9b9;
             margin-right: 4px;
             -webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
             -moz-box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
@@ -77,7 +81,7 @@
             width: 100%;
             height: 60px;
             left: 0px;
-            top: 30px;
+            top: 80px;
             text-align: center;
             -webkit-transition: all 400ms linear;
             -moz-transition: all 400ms linear;
@@ -141,39 +145,35 @@
 
         /* HEADER */
 
-        h1 {
-            text-align: center;
+        .my-h1 {
+            text-align: left;
             margin-top: 10px;
-
-            font-size: 60px;
-            text-shadow: 0px -2px 0px #333,
-            0px 2px 3px #666;
-
-            text-shadow: 2px 2px yellow;
+            margin-left: 220px;
+            font-size: 70px;
+            color: #665353;
+            font-family: 'Gaegu', cursive;
         }
 
 
     </style>
 </head>
 
-<body style="background-color: #4CAF50">
+<body>
 
 
-<h1>Welcome to Travel Activity Tracker System</h1>
+<h1 class="my-h1">Travel Activity Tracker</h1>
 
 
 
 <ul class="ca-menu">
     <li>
         <a th:href="@{/login}">
-            <span class="ca-icon">LOGIN</span>
+            <span class="ca-icon" style="font-family: 'Gaegu', cursive; font-size: 50px">Login</span>
             <div class="ca-content">
-                <h2 class="ca-main">Select your role</h2>
-                <h3 class="ca-sub">User, Admin, Supervisor</h3>
             </div>
         </a>
     </li>
-    <li>
+    <!--<li>
         <a href="registrationForm.html">
             <span class="ca-icon">Register</span>
             <div class="cac-ontent">
@@ -181,22 +181,20 @@
                 <h3 class="ca-sub">Select your role</h3>
             </div>
         </a>
-    </li>
+    </li>-->
     <li>
         <a th:href="@{/aboutus}">
-            <span class="ca-icon">About Us</span>
+            <span class="ca-icon"  style="font-family: 'Gaegu', cursive; font-size: 50px">About Us</span>
             <div class="ca-content">
-                <h2 class="ca-main">You want to find more info?</h2>
-                <h3 class="ca-sub">Take a look at our portfolio</h3>
+
             </div>
         </a>
     </li>
     <li>
         <a th:href="@{/aboutus}">
-            <span class="ca-icon">Contact Us </span>
+            <span class="ca-icon"  style="font-family: 'Gaegu', cursive; font-size: 50px">Contact Us </span>
             <div class="ca-content">
-                <h2 class="ca-main">You have questions or suggestions?</h2>
-                <h3 class="ca-sub">Feel free to ask!</h3>
+
             </div>
         </a>
     </li>

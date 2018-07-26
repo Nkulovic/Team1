@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css' rel='stylesheet' />
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
+
+    <!--
+        <script th:src="@{/js/jquery-1.10.2.js}"></script>
+    -->
+    <!-- BOOTSTRAP SCRIPTS -->
+<!--
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+-->
+    <!-- CUSTOM SCRIPTS -->
+   <!-- <script th:src="@{/js/custom.js}"></script>-->
+    <link th:href="@{/css/font-awesome.css}" rel="stylesheet" />
+    <link th:href="@{/css/custom.css}" rel="stylesheet" />
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+<style>
+
+    /* Full-width input fields */
+    input[type=text], input[type=password] {
+        width: 90%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+
+    }
+
+    /* Set a style for all buttons */
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 90%;
+    }
+
+    button:hover {
+        opacity: 0.8;
+    }
+
+    /* Extra styles for the cancel button */
+    .cancelbtn {
+        width: auto;
+        padding: 10px 18px;
+        background-color: #f44336;
+    }
+
+    /* Center the image and position the close button */
+    .imgcontainer {
+        text-align: center;
+        margin: 24px 0 12px 0;
+        position: relative;
+    }
+
+    img.avatar {
+        width: 40%;
+        border-radius: 50%;
+    }
+
+    .container {
+        padding: 16px;
+    }
+
+    span.psw {
+        float: right;
+        padding-top: 16px;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        padding-top: 60px;
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+        border: 1px solid #888;
+        width: 60%; /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button (x) */
+    .close {
+        position: absolute;
+        right: 25px;
+        top: 0;
+        color: #000;
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: red;
+        cursor: pointer;
+    }
+
+    /* Add Zoom Animation */
+    .animate {
+        -webkit-animation: animatezoom 0.6s;
+        animation: animatezoom 0.6s
+    }
+
+    @-webkit-keyframes animatezoom {
+        from {-webkit-transform: scale(0)}
+        to {-webkit-transform: scale(1)}
+    }
+
+    @keyframes animatezoom {
+        from {transform: scale(0)}
+        to {transform: scale(1)}
+    }
+
+    /* Change styles for span and cancel button on extra small screens */
+    @media screen and (max-width: 300px) {
+        span.psw {
+            display: block;
+            float: none;
+        }
+        .cancelbtn {
+            width: 100%;
+        }
+    }
+</style>
+</head>
+<body>
+
+
+<div id="wrapper">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: #4CAF50">
+        <div class="adjust-nav">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img th:src="@{images/palindrom.jpg}" style="height: 50px; width: 50px; border-radius: 50%;"/>
+                    <span style="color:#aced84; text-align: center;"> Welcome to Travel Activity Tracker System </span>
+                </a>
+
+            </div>
+
+            <span class="logout-spn" >
+                <form th:action="@{/logout}" th:method="post">
+                    <button type="submit" class="btn btn-link">
+                        LOGOUT
+                    </button>
+                </form>
+
+                </span>
+        </div>
+    </div>
+    <!-- /. NAV TOP  -->
+    <nav class="navbar-default navbar-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+                <li class="active-link">
+                    <a th:href="@{/admin}" ><i class="fa fa-desktop "></i>Dashboard </a>
+                </li>
+
+               <!-- <li>
+                    <a href="#"><i class="fa fa-qrcode "></i>My Link One</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-bar-chart-o"></i>My Link Two</a>
+                </li>
+
+                <li>
+                    <a href="#"><i class="fa fa-edit "></i>My Link Three </a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-table "></i>My Link Four</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-edit "></i>My Link Five </a>
+                </li>-->
+
+            </ul>
+        </div>
+
+    </nav>
+    <!-- /. NAV SIDE  -->
+    <div id="page-wrapper" >
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>ADMIN DASHBOARD</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <div class="alert alert-info" style="background-color: #4CAF50">
+                        <strong style="color: #aced84">Welcome Admin ! </strong> <span style="color: #aced84"> Select one of the options below. </span>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <!-- /. ROW  -->
+
+            <!--ADMIN ZA KORISNIKE-->
+
+
+
+            <div class="row text-center pad-top">
+
+
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+                    <div class="div-square">
+                        <a href="adminCard.html">
+                            <i class="fa fa-key fa-5x"></i>
+                            <h4>Admin Profile</h4>
+                        </a>
+                    </div>
+
+
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+                    <div class="div-square">
+                        <a th:href="@{/userslistpage}">
+                            <i class="fa fa-users fa-5x"></i>
+                            <h4>See Users</h4>
+                        </a>
+                    </div>
+                </div>
+
+                <!--ADD USER-->
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+                    <div class="div-square">
+
+                        <a onclick="document.getElementById('addUser').style.display='block'">
+                            <i class="fa fa-user fa-5x"></i>
+                            <h4>Add User</h4>
+                        </a>
+                        <div id="addUser" class="modal">
+
+                            <form class="modal-content animate" th:action = "@{/adduser}" th:method = "post" th:object="${user}">
+                                <div class="imgcontainer">
+                                    <span onclick="document.getElementById('addUser').style.display='none'" class="close" title="Close Modal">&times;</span>
+<!--
+                                    <img th:src="@{/images/guest.png}" alt="Avatar" class="avatar" style="height: 350px; width: 350px;" />
+-->
+                                    <img src="https://www.shareicon.net/data/2016/06/30/788859_add_512x512.png" style="height: 100px; width: 100px;">
+                                </div>
+
+                                <div class="container">
+                                    <input type="text" placeholder="Enter new Username" name="username" th:value="${user.getUsername()}"  th:field="*{username}" required>
+
+                                    <input type="password" placeholder="Enter new password" name="password" th:value="${user.getPassword()}"  th:field="*{password}" required>
+
+                                    <input type="text" placeholder="Enter first name" name="firstName" th:value="${user.getFirstName()}"  th:field="*{firstName}" required>
+
+                                    <input type="text" placeholder="Enter last name" name="lastName" th:value="${user.getLastName()}" th:field="*{lastName}" required>
+
+                                    <input type="text" placeholder="Enter role" name="role" th:value="${user.getRole()}" th:field="*{role}" required>
+
+                                    <input type="text" placeholder="Enter longitude" name="longitude"  th:value="${user.getLongitude()}" th:field="*{longitude}" required>
+
+                                    <input type="text" placeholder="Enter latitude" name="latitude" th:value="${user.getLatitude()}"  th:field="*{latitude}" required>
+
+                                    <input type="hidden" th:value="${user.getUserID()}" th:field="*{userID}">
+
+                                    <button type="submit">Save Changes</button>
+
+                                </div>
+
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+                    <div class="div-square">
+                        <a th:href="@{/hotelslistpage}" >
+                            <i class="fas fa-hotel fa-5x"></i>
+                            <h4> See Hotels </h4>
+                        </a>
+                    </div>
+
+                </div>
+
+                <!--ADD HOTEL-->
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+                    <div class="div-square">
+                        <a onclick="document.getElementById('addHotel').style.display='block'">
+                            <i class="fas fa-building fa-5x"></i>
+                            <h4>Add Hotel</h4>
+
+                            <div id="addHotel" class="modal">
+                                <form class="modal-content animate" th:action = "@{/addhotel}" method = "post" th:object="${hotel}">
+                                    <div class="imgcontainer">
+                                        <span onclick="document.getElementById('addHotel').style.display='none'" class="close" title="Close Modal">&times;</span>
+                                    </div>
+
+                                    <div class="container">
+                                        <input type="text" placeholder="Hotel Name" name="name" id="name" th:field="*{name}" required>
+                                        <div class="alert alert-danger" th:if="${#fields.hasErrors('name')}">
+                                            <strong th:text="${failMessage}"></strong>
+                                        </div>
+                                        <input type="text" placeholder="Hotel Description" name="description" id="description" th:field="*{description}" required>
+
+                                        <input type="text" placeholder="address" name="address" id="address" th:field="*{address}" required>
+
+                                        <input type="text" placeholder="City" name="location" id="location" th:field="*{location}"  required>
+
+                                        <input type="text" placeholder="Longitude" name="longitude" id="longitude" th:field="*{longitude}" required>
+
+                                        <input type="text" placeholder="Latitude" name="latitude" id="latitude" th:field="*{latitude}" required>
+
+                                        <div id="map-leaflet" class="map" style="width:70%;height:400px;margin: 100px">
+
+                                        </div>
+
+
+                                        <button type="submit">Add Hotel</button>
+
+                                    </div>
+
+
+                                </form>
+                            </div>
+
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 ">
+                    <div class="alert alert-success" th:if="${successMessage}">
+                        <strong th:text="${successMessage}">Success!</strong>
+                    </div>
+                </div>
+                <div class="col-sm-12 " >
+                    <div class="alert alert-danger" th:if="${failMessage}">
+                        <strong th:text="${failMessage}">Danger!</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <div class="footer" style="background-color: #4CAF50;">
+
+
+        <div class="row">
+            <div class="col-lg-12" style="text-align: center">
+                <span style="color:#aced84">&copy; 2018  Team 1 - Palindrom | Travel Activity Tracker System </span>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('addUser');
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    var modal = document.getElementById('addHotel');
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+</script>
+
+<script>
+
+    mapboxgl.accessToken = 'pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA';
+
+    var atoken = 'pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA';
+
+
+    $('input[name="location"]').change(function() {
+        //  var address = $('input[name="address"]').val();
+        var city = $('input[name="location"]').val();
+
+        var getBBoxURL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + city + '.json?access_token=' + atoken;
+        //Sarajevo.json?access_token=pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA&country=ba'
+
+        minX = 0;
+        minY = 0;
+        maxX = 0;
+        maxY = 0;
+
+        $.ajax({
+            method: 'GET',
+            url: getBBoxURL,
+        }).done(function(data){
+            //  console.log(data.features.bbox)
+            minX = data.features[0].bbox[0];
+            minY = data.features[0].bbox[1];
+            maxX = data.features[0].bbox[2];
+            maxY = data.features[0].bbox[3];
+            console.log(minX + ',' + minY + ',' + maxX + ',' + maxY);
+
+            //  $('input[name="address"]').change(function() {
+            var address = $('input[name="address"]').val();
+            var hotelAddressURL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + address + ' ' + city + '.json?access_token=' + atoken + '&bbox=' + minX + ',' + minY + ',' + maxX + ',' + maxY;
+            //ulica+marsala+tita+sarajevo.json?access_token=pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA&bbox=' + minX + ',' + minY + ',' + maxX + ',' + maxY;
+
+
+            $.ajax({
+                method: 'GET',
+                url: hotelAddressURL,
+            }).done(function(data){
+                var listResults = data.features;
+                // console.log(data);
+                for(var i = 0; i < listResults.length; i++) {
+                    console.log(listResults[i].center[0] + ' ' + listResults[i].center[1]);
+                    //if(listResults[i])
+                }
+
+                var longitude = listResults[0].center[0];
+                //
+                var latitude = listResults[0].center[1];
+                console.log(latitude + ' ' + longitude);
+
+                $('input[name="longitude"]').val(longitude);
+                $('input[name="latitude"]').val(latitude);
+
+
+                var atoken = 'pk.eyJ1Ijoibm9yYTciLCJhIjoiY2pqc3ZhZjdvMDEycTNwbHB2YTliNHZhaiJ9.gaDdgUl4KTrCB_kvDVG-jA';
+                L.mapbox.accessToken = atoken;
+
+                console.log(listResults[0].center[1] + listResults[0].center[0]);
+                var mapLeaflet = L.mapbox.map('map-leaflet', 'mapbox.streets')
+                    .setView([latitude, longitude], 15);
+
+                L.marker([latitude, longitude]).addTo(mapLeaflet);
+
+                mapLeaflet.scrollWheelZoom.disable();
+
+            });
+            //});
+
+        });
+
+    });
+
+
+    // console.log(minX + ',' + minY + ',' + maxX + ',' + maxY);
+
+
+
+</script>
+</body>
+</html>
